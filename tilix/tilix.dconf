@@ -1,0 +1,34 @@
+[/]
+accelerators-enabled=false
+control-scroll-zoom=true
+copy-on-select=true
+quake-specific-monitor=0
+terminal-title-style='normal'
+theme-variant='dark'
+unsafe-paste-alert=true
+use-tabs=true
+window-style='normal'
+
+[profiles]
+list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d', 'f0215166-20ba-418b-9ffe-a97ad609ef5a']
+
+[profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
+background-color='#272822'
+backspace-binding='ascii-delete'
+badge-color-set=false
+bold-color-set=false
+cjk-utf8-ambiguous-width='narrow'
+cursor-blink-mode='on'
+cursor-colors-set=false
+cursor-shape='ibeam'
+draw-margin=76
+font='Cica 12'
+foreground-color='#F8F8F2'
+highlight-colors-set=false
+palette=['#272822', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F8F8F2', '#75715E', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F9F8F5']
+use-system-font=false
+use-theme-colors=false
+visible-name='デフォルト'
+
+[profiles/f0215166-20ba-418b-9ffe-a97ad609ef5a]
+visible-name='Unnamed'
