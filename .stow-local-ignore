@@ -1,6 +1,7 @@
-Makefile
-README.md
-LICENSE
-tilix.dconf
-.git
-AGENTS.md
+^\.git$
+^\.stow-local-ignore$
+^Makefile$
+^README\.md$
+^LICENSE$
+^AGENTS\.md$
+^tilix$
