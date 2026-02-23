@@ -14,7 +14,7 @@ test:
 
 link:
 	@echo "==> Linking dotfiles-term"
-	ln -sfn $(REPO_ROOT)/wezterm.lua $(HOME)/.wezterm.lua
+	ln -sfn "$(REPO_ROOT)/wezterm.lua" "$(HOME)/.wezterm.lua"
 
 setup: link
 	@echo "==> Setting up dotfiles-term"
