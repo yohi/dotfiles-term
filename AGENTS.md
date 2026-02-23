@@ -7,22 +7,21 @@
 
 ```text
 dotfiles-term/
+├── wezterm.lua                 # [Link Target] WezTerm configuration → ~/.wezterm.lua
 ├── tilix/                      # Tilix terminal config
 │   └── tilix.dconf             # dconf export for Tilix
 └── Makefile                    # Setup entry point
 ```
 
-> This is currently a minimal component. WezTerm config and other terminal settings will be added.
-
 ## COMPONENT LAYOUT CONVENTION
 
 This repository is part of the **dotfiles polyrepo** orchestrated by `dotfiles-core`.
-All changes MUST comply with the central layout rules. Please refer to [`dotfiles-core/docs/ARCHITECTURE.md`](../../docs/ARCHITECTURE.md) for the full, authoritative rules and constraints.
+All changes MUST comply with the central layout rules. Please refer to the central [ARCHITECTURE.md](https://raw.githubusercontent.com/yohi/dotfiles-core/refs/heads/master/docs/ARCHITECTURE.md) for the full, authoritative rules and constraints.
 
 ## THIS COMPONENT — SPECIAL NOTES
 
-- `tilix/tilix.dconf` is a dconf export — applied via `dconf load`, NOT Stow-linked.
-- WezTerm config (`.wezterm.lua` or `.config/wezterm/`) should be a Stow target when added.
+- `tilix/tilix.dconf` is a dconf export — applied via `dconf load`, NOT linked.
+- `wezterm.lua` is linked to `~/.wezterm.lua` via `ln -sfn` in the Makefile (`make link`).
 - Terminal emulator configs that live under `~/.config/<tool>/` should mirror that directory structure at repo root.
 
 ## CODE STYLE
