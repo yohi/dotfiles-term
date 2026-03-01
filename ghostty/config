@@ -1,0 +1,74 @@
+# Ghostty Configuration
+# Optimized for Linux with Cica font and Homebrew zsh
+
+## Font settings
+font-family = "Cica Regular"
+font-size = 11
+font-thicken = false
+font-shaping-break = "cursor"
+
+# Precision cell adjustment for "square" look
+adjust-cell-width = 2
+adjust-cell-height = -1
+
+## Window Appearance & Behavior
+maximize = true
+fullscreen = false
+window-padding-x = 0
+window-padding-y = 0
+window-decoration = client
+window-theme = ghostty
+gtk-titlebar = true
+gtk-titlebar-style = tabs
+gtk-wide-tabs = false
+window-titlebar-background = #333333
+window-titlebar-foreground = #ffffff
+gtk-custom-css = /home/y_ohi/dotfiles/components/dotfiles-term/ghostty/compact.css
+
+# Background opacity and blur (Leveraging GPU rendering)
+background-opacity = 0.9
+background-blur = true
+
+# Inherit current directory for new tabs/splits
+window-inherit-working-directory = true
+
+## Shell & Environment
+command = "/home/linuxbrew/.linuxbrew/bin/zsh"
+env = LANG=ja_JP.UTF-8
+shell-integration = detect
+shell-integration-features = "cursor, sudo, title"
+
+## Mouse & Clipboard
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = 3
+cursor-click-to-move = true
+copy-on-select = true
+clipboard-read = allow
+clipboard-write = allow
+clipboard-paste-protection = true
+
+## Keyboard Shortcuts (Keybinds)
+# Reload configuration
+keybind = ctrl+shift+comma=reload_config
+
+# Tab management
+keybind = ctrl+shift+t=new_tab
+keybind = ctrl+page_up=previous_tab
+keybind = ctrl+page_down=next_tab
+keybind = ctrl+shift+w=close_surface
+
+# Split management
+keybind = ctrl+shift+d=new_split:right
+keybind = ctrl+shift+s=new_split:down
+keybind = ctrl+alt+h=goto_split:left
+keybind = ctrl+alt+l=goto_split:right
+keybind = ctrl+alt+k=goto_split:up
+keybind = ctrl+alt+j=goto_split:down
+
+# Window control
+keybind = ctrl+alt+f=toggle_fullscreen
+
+## Linux Specific Performance & Stability
+linux-cgroup = always
+async-backend = auto
+desktop-notifications = true

@@ -1,0 +1,34 @@
+/* Ghostty Compact UI Style - Force reduction */
+window.ghostty-window headerbar,
+window.ghostty-window .header-bar,
+window.ghostty-window adwheaderbar {
+    min-height: 0px !important;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+/* ボタンやエントリーの余白を極限まで削る */
+headerbar button,
+headerbar entry {
+    min-height: 0px !important;
+    padding: 0px 4px !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+}
+
+/* タブバー全体の高さを制御 */
+tabbar {
+    min-height: 0px !important;
+}
+
+/* 個別のタブの高さを制御 */
+tabbar tab {
+    padding: 2px 8px !important;
+    min-height: 24px !important;
+}
+
+/* ウィンドウ操作ボタン（閉じる・最小化など）を小さくする */
+headerbar > windowhandle > box {
+    padding: 0px !important;
+    margin: 0px !important;
+}
