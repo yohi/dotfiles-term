@@ -10,7 +10,7 @@
 
 ---
 
-### Task 1: Update Makefile Comment
+## Task 1: Update Makefile Comment
 
 **Files:**
 - Modify: `Makefile:1-4`
@@ -45,7 +45,7 @@ git add Makefile
 git commit -m "fix(Makefile): update common-mk path in comment to match symlinks"
 ```
 
-### Task 2: Verify Symlink Targets Consistency
+## Task 2: Verify Symlink Targets Consistency
 
 **Step 1: Run `ls -l _mk/` and compare with the updated comment**
 
@@ -53,7 +53,7 @@ Run: `ls -l _mk/`
 Expected: `core.mk` and `help.mk` point to `../../../common-mk/...`.
 Verify: The paths match.
 
-### Task 3: Claim Verification Before Completion
+## Task 3: Claim Verification Before Completion
 
 **Step 1: Invoke `verification-before-completion` skill**
 - Use the evidence gathered in Task 2 to confirm the fix is correct.
