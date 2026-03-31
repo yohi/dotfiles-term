@@ -26,6 +26,8 @@ dotfiles-term/
 
 ## THIS COMPONENT — SPECIAL NOTES
 
+- **Makefile Dependency:** This component relies on `common-mk`. It MUST be located at the parent directory (`../common-mk/`) or symlinked there.
+- **Fixed Pathing:** Includes in `_mk/` use fixed relative paths. Custom path configuration for `common-mk` is NOT supported. Run `make help` to verify setup.
 - `tilix/tilix.dconf` is a dconf export — applied via `dconf load`, NOT linked.
 - `wezterm.lua` is linked to `~/.wezterm.lua` via `ln -sfn` in the Makefile (`make link`).
 - Terminal emulator configs that live under `~/.config/<tool>/` should mirror that directory structure at repo root.
