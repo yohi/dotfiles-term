@@ -8,8 +8,7 @@ install: install-term ## Terminal 関連のインストール
 setup: setup-term ## Terminal の設定適用
 
 install-term: ## No-op: terminal dotfiles managed externally
-	@echo "==> No-op: terminal dotfiles managed externally - see README for instructions"
-
+	@echo "No-op: terminal dotfiles managed externally—see README for instructions"
 clean: ## 生成物や一時ファイルを削除します
 	@echo "==> Cleaning dotfiles-term"
 
