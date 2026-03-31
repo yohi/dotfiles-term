@@ -20,6 +20,7 @@ dotfiles-term/
 ├── wezterm.lua                 # [Link Target] WezTerm configuration → ~/.wezterm.lua
 ├── tilix/                      # Tilix terminal config
 │   └── tilix.dconf             # dconf export for Tilix
+├── _mk/                        # Makefile sub-targets
 └── Makefile                    # Setup entry point
 ```
 
