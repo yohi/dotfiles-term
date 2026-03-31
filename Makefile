@@ -1,31 +1,17 @@
-# Orchestrator core configuration
-# Note: These are symlinked from ../../../common-mk/ when managed by dotfiles-core
--include _mk/core.mk
--include _mk/help.mk
-
-# Component-specific logic
-
-
-
-
-
-REPO_ROOT ?= $(CURDIR)
+include _mk/core.mk
+include _mk/help.mk
 include _mk/term.mk
 
-.PHONY: all clean test link setup
+.PHONY: install setup install-term setup-term clean test
 
-all: setup
+install: install-term ## Terminal 関連のインストール
+setup: setup-term ## Terminal の設定適用
+
+install-term: ## No-op: terminal dotfiles managed externally
+	@echo "==> No-op: terminal dotfiles managed externally - see README for instructions"
 
 clean: ## 生成物や一時ファイルを削除します
 	@echo "==> Cleaning dotfiles-term"
 
-test:
+test: ## テスト実行
 	@echo "==> Testing dotfiles-term"
-
-link: ## シンボリックリンクを展開し、dotfiles を配置します
-	@echo "==> Linking dotfiles-term"
-	ln -sfn "$(REPO_ROOT)/wezterm.lua" "$(HOME)/.wezterm.lua"
-
-setup: link
-	@echo "==> Setting up dotfiles-term"
-	$(MAKE) setup-term

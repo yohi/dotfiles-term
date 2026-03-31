@@ -1,15 +1,35 @@
 # dotfiles-term
 
+## 管理と共存関係
+
+本リポジトリは [dotfiles-core](https://github.com/yohi/dotfiles) によって管理されるコンポーネントの一つです。
+
+### ⚠️ 使用時の注意点
+本リポジトリは `dotfiles-core` の共通 Makefile ルール（`common-mk`）に依存しており、実行時には `common-mk` へのシンボリックリンクが必要です。そのため、**本リポジトリ単体での使用（クローンしての利用）はサポートされていません。**
+
+推奨される使用方法は、`dotfiles-core` リポジトリから `make setup` を実行し、適切なディレクトリ構造とシンボリックリンクが構成された状態で利用することです。
+
 ターミナルソフトウェア（WezTerm、Tilixなど）の設定ファイルを管理するコンポーネントリポジトリです。
 `dotfiles-core` と連携して動作します。
 
+## 主要機能
 
+- **WezTerm 設定**: 高機能な GPU 加速ターミナル WezTerm の Lua 設定。
+- **Tilix 統合**: タイリングターミナル Tilix の設定（dconf）管理。
 
-## ⚠️  Standalone Usage Note
-This repository depends on common Makefile fragments and rules from [dotfiles-core](https://github.com/yohi/dotfiles-core).
-When using this repository standalone, you must manually set up the `common-mk` dependency:
+## ターゲット
 
-1. Clone or copy the `common-mk` directory from the [dotfiles-core](https://github.com/yohi/dotfiles-core) repository.
-2. Place it such that it's available at `../common-mk/` relative to this repository root.
+- `make setup`: 各ターミナルの設定をシステムに適用します。
+- `make install-term`: 本リポジトリ単体でのインストールは不要です（No-op）。詳細は Makefile を参照してください。
 
-Alternatively, use `dotfiles-core` to manage the entire setup automatically via `make setup`.
+## ディレクトリ構成
+
+```text
+.
+├── Makefile
+├── README.md
+├── AGENTS.md
+├── _mk/                    # Makefile sub-targets
+├── tilix/                  # Tilix configuration (dconf)
+└── wezterm.lua             # WezTerm configuration (Lua)
+```
