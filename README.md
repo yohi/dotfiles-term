@@ -1,16 +1,17 @@
 # dotfiles-term
 
+ターミナルソフトウェア（WezTerm、Tilixなど）の設定ファイルを管理するコンポーネントリポジトリです。
+
 ## 管理と共存関係
 
-本リポジトリは [dotfiles-core](https://github.com/yohi/dotfiles) によって管理されるコンポーネントの一つです。
+> [!IMPORTANT]
+> 本リポジトリは [dotfiles-core](https://github.com/yohi/dotfiles-core) によって管理されるコンポーネントの一つです。
 
-### ⚠️ 使用時の注意点
-本リポジトリは `dotfiles-core` の共通 Makefile ルール（`common-mk`）に依存しており、実行時には `common-mk` へのシンボリックリンクが必要です。そのため、**本リポジトリ単体での使用（クローンしての利用）はサポートされていません。**
-
-推奨される使用方法は、`dotfiles-core` リポジトリから `make setup` を実行し、適切なディレクトリ構造とシンボリックリンクが構成された状態で利用することです。
-
-ターミナルソフトウェア（WezTerm、Tilixなど）の設定ファイルを管理するコンポーネントリポジトリです。
-`dotfiles-core` と連携して動作します。
+> [!WARNING]
+> **使用時の注意点**
+> 本リポジトリは `dotfiles-core` の共通 Makefile ルール（`common-mk`）に依存しており、実行時には `common-mk` へのシンボリックリンクが必要です。そのため、**本リポジトリ単体での使用（クローンしての利用）はサポートされていません。**
+>
+> 推奨される使用方法は、`dotfiles-core` リポジトリから `make setup` を実行し、適切なディレクトリ構造とシンボリックリンクが構成された状態で利用することです。
 
 ## 主要機能
 
@@ -20,7 +21,7 @@
 ## ターゲット
 
 - `make setup`: 各ターミナルの設定をシステムに適用します。
-- `make install-term`: 本リポジトリ単体でのインストールは不要です（No-op）。詳細は Makefile を参照してください。
+- `make install-term`: No-op. ターミナル設定は外部で管理されています（README参照）。
 
 ## ディレクトリ構成
 
