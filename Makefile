@@ -1,6 +1,6 @@
 include _mk/core.mk
 include _mk/help.mk
--include _mk/term.mk
+include _mk/term.mk
 
 .PHONY: install setup install-term setup-term clean test
 
