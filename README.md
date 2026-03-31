@@ -17,6 +17,11 @@
 - **WezTerm 設定**: 高機能な GPU 加速ターミナル WezTerm の Lua 設定。
 - **Tilix 統合**: タイリングターミナル Tilix の設定（dconf）管理。
 
+## ターゲット
+
+- `make setup`: 各ターミナルの設定をシステムに適用します。
+- `make install-term`: 本リポジトリ単体でのインストールは不要です（No-op）。詳細は Makefile を参照してください。
+
 ## ディレクトリ構成
 
 ```text
