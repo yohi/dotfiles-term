@@ -2,15 +2,13 @@ include _mk/core.mk
 include _mk/help.mk
 -include _mk/term.mk
 
+.PHONY: install setup install-term setup-term clean test
+
 install: install-term ## Terminal 関連のインストール
 setup: setup-term ## Terminal の設定適用
 
 install-term:
 	@echo "==> Installing dotfiles-term"
-
-setup-term:
-	@echo "==> Setting up dotfiles-term"
-	ln -sfn "$(CURDIR)/wezterm.lua" "$(HOME)/.wezterm.lua"
 
 clean: ## 生成物や一時ファイルを削除します
 	@echo "==> Cleaning dotfiles-term"

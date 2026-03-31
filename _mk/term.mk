@@ -1,3 +1,3 @@
-.PHONY: setup-term
 setup-term:
-	@echo "  -> term setup (placeholder)"
+	@echo "==> Setting up dotfiles-term"
+	ln -sfn "$(CURDIR)/wezterm.lua" "$(HOME)/.wezterm.lua"
