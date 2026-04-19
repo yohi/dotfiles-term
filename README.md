@@ -1,6 +1,6 @@
 # dotfiles-term
 
-ターミナルソフトウェア（WezTerm、Tilixなど）の設定ファイルを管理するコンポーネントリポジトリです。
+ターミナルソフトウェア（WezTerm、Tilix、Ghosttyなど）の設定ファイルを管理するコンポーネントリポジトリです。
 
 ## 管理と共存関係
 
@@ -17,6 +17,7 @@
 
 - **WezTerm 設定**: 高機能な GPU 加速ターミナル WezTerm の Lua 設定。
 - **Tilix 統合**: タイリングターミナル Tilix の設定（dconf）管理。
+- **Ghostty 設定**: 高速かつネイティブなターミナル Ghostty の設定管理。
 
 ## ターゲット
 
@@ -32,5 +33,7 @@
 ├── AGENTS.md
 ├── _mk/                    # Makefile sub-targets
 ├── tilix/                  # Tilix configuration (dconf)
+├── ghostty/                # Ghostty configuration
+├── ghostty-src/            # Ghostty source (reference)
 └── wezterm.lua             # WezTerm configuration (Lua)
 ```
