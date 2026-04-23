@@ -1,0 +1,43 @@
+# Ghostty Configuration (Synced from Tilix)
+
+# Font settings
+font-family = "Cica"
+font-size = 12
+
+# Colors (Monokai-ish from Tilix)
+background = #272822
+foreground = #F8F8F2
+
+# Palette
+palette = 0=#272822
+palette = 1=#F92672
+palette = 2=#A6E22E
+palette = 3=#F4BF75
+palette = 4=#66D9EF
+palette = 5=#AE81FF
+palette = 6=#A1EFE4
+palette = 7=#F8F8F2
+palette = 8=#75715E
+palette = 9=#F92672
+palette = 10=#A6E22E
+palette = 11=#F4BF75
+palette = 12=#66D9EF
+palette = 13=#AE81FF
+palette = 14=#A1EFE4
+palette = 15=#F9F8F5
+
+# Cursor
+cursor-style = ibeam
+cursor-blink = true
+
+# Window
+window-decoration = true
+window-theme = dark
+
+# Behavior
+scrollback-limit = 100000
+copy-on-select = true
+confirm-close-surface = false
+
+# Shell
+command = zsh --login

@@ -17,17 +17,21 @@ This repository is part of the **dotfiles polyrepo** managed by [dotfiles-core](
 # PROJECT KNOWLEDGE BASE
 
 **Repository:** dotfiles-term
-**Role:** Terminal emulator configuration — WezTerm, Tilix, and other terminal settings
+**Role:** Terminal emulator configuration — WezTerm, Tilix, Ghostty, and other terminal settings
 
 ## STRUCTURE
 
 ```text
 dotfiles-term/
+├── Makefile                    # Setup entry point
 ├── wezterm.lua                 # [Link Target] WezTerm configuration → ~/.wezterm.lua
 ├── tilix/                      # Tilix terminal config
-│   └── tilix.dconf             # dconf export for Tilix
+│   └── tilix.dconf             # dconf export for Tilix (applied via dconf load)
+├── ghostty/                    # Ghostty terminal config
+│   └── config                  # [Link Target] Ghostty configuration → ~/.config/ghostty/config
+├── ghostty-src/                # Ghostty source code (for reference)
 ├── _mk/                        # Makefile sub-targets
-└── Makefile                    # Setup entry point
+└── ...
 ```
 
 ## THIS COMPONENT — SPECIAL NOTES
@@ -35,7 +39,8 @@ dotfiles-term/
 - **Makefile Dependency:** This component relies on `common-mk`. It MUST be located at the parent directory (`../common-mk/`) or symlinked there.
 - **Fixed Pathing:** Includes in `_mk/` use fixed relative paths. Custom path configuration for `common-mk` is NOT supported. Run `make help` to verify setup.
 - `tilix/tilix.dconf` is a dconf export — applied via `dconf load`, NOT linked.
-- `wezterm.lua` is linked to `~/.wezterm.lua` via `ln -sfn` in the Makefile (`make link`).
+- `wezterm.lua` is linked to `~/.wezterm.lua` via `ln -sfn` in the Makefile (`make setup`).
+- `ghostty/config` is linked to `~/.config/ghostty/config` via `ln -sfn` in the Makefile (`make setup`).
 - Terminal emulator configs that live under `~/.config/<tool>/` should mirror that directory structure at repo root.
 
 ## CODE STYLE
