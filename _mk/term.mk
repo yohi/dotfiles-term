@@ -5,8 +5,9 @@ setup-term: ## ターミナルの設定をシステムに適用します
 	@# Ghostty
 	mkdir -p "$(HOME)/.config/ghostty"
 	@if [ -f "$(HOME)/.config/ghostty/config" ] && [ ! -L "$(HOME)/.config/ghostty/config" ]; then \
-		mv "$(HOME)/.config/ghostty/config" "$(HOME)/.config/ghostty/config.bak"; \
-		echo "Backed up existing Ghostty config to config.bak"; \
+		TIMESTAMP=$$(date +%Y%m%d_%H%M%S); \
+		mv "$(HOME)/.config/ghostty/config" "$(HOME)/.config/ghostty/config.bak.$$TIMESTAMP"; \
+		echo "Backed up existing Ghostty config to config.bak.$$TIMESTAMP"; \
 	fi
 	ln -sfn "$(CURDIR)/ghostty/config" "$(HOME)/.config/ghostty/config"
 	@# Tilix

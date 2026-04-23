@@ -32,12 +32,12 @@ cursor-blink = true
 
 # Window
 window-decoration = true
-theme = dark
+window-theme = dark
 
 # Behavior
-scrollback-limit = 999999999
+scrollback-limit = 100000
 copy-on-select = true
 confirm-close-surface = false
 
 # Shell
-command = /home/linuxbrew/.linuxbrew/bin/zsh --login
+command = zsh --login

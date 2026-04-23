@@ -32,8 +32,8 @@
 ├── README.md
 ├── AGENTS.md
 ├── _mk/                    # Makefile sub-targets
-├── tilix/                  # Tilix configuration (dconf)
-├── ghostty/                # Ghostty configuration
-├── ghostty-src/            # Ghostty source (reference)
-└── wezterm.lua             # WezTerm configuration (Lua)
+├── tilix/                  # Tilix 設定 (dconf)
+├── ghostty/                # Ghostty 設定
+├── ghostty-src/            # Ghostty ソース（参照）
+└── wezterm.lua             # WezTerm 設定 (Lua)
 ```
