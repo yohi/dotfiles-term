@@ -24,3 +24,7 @@ setup-term: ## ターミナルの設定をシステムに適用します
 		echo "Backed up existing tmux config to .tmux.conf.bak.$$TIMESTAMP"; \
 	fi
 	ln -sfn "$(CURDIR)/tmux/tmux.conf" "$(HOME)/.tmux.conf"
+	@if [ ! -d "$(HOME)/.tmux/plugins/tpm" ]; then \
+		echo "Installing Tmux Plugin Manager (TPM)..."; \
+		git clone https://github.com/tmux-plugins/tpm "$(HOME)/.tmux/plugins/tpm"; \
+	fi
