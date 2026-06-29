@@ -1,3 +1,5 @@
+# vim: ft=config
+
 # --- 言語 ---
 # GhosttyのGUI言語をシステムのデフォルト以外に設定します。
 # language = 
@@ -420,7 +422,7 @@ quick-terminal-position = top
 
 # --- シェル統合とパレット ---
 # シェル統合の自動インジェクション設定を指定します。
-shell-integration = detected
+shell-integration = detect
 
 # 有効にするシェル統合機能を指定します。
 # shell-integration-features = 
@@ -477,7 +479,7 @@ shell-integration = detected
 
 # --- プラットフォーム固有 (Linux / GTK) ---
 # 各サーフェスをsystemdスコープに配置し、リソース制限を行います。
-linux-cgroup = true
+linux-cgroup = always
 # linux-cgroup-memory-limit = 
 # linux-cgroup-processes-limit = 
 # linux-cgroup-hard-fail = 
