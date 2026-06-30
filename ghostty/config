@@ -1,1 +1,518 @@
-/home/y_ohi/dotfiles/components/dotfiles-term/ghostty/config
+# vim: ft=config
+
+# --- 言語 ---
+# GhosttyのGUI言語をシステムのデフォルト以外に設定します。
+# language = 
+
+# --- フォント ---
+# 使用するフォントファミリーを指定します。複数指定してフォールバック設定も可能です。
+font-family = "Cica"
+# font-family-bold = 
+# font-family-italic = 
+# font-family-bold-italic = 
+
+# ターミナルフォントスタイルに対して特定の名前付きスタイルを使用するか、スタイルを無効化します。
+# font-style = 
+# font-style-bold = 
+# font-style-italic = 
+# font-style-bold-italic = 
+
+# 指定したフォントファミリに要求されたスタイルがない場合、Ghosttyにスタイルを合成させるかを制御します。
+# font-synthetic-style = 
+
+# フォントの機能（リガチャの無効化など）を適用します。
+font-feature = liga
+font-feature = dlig
+
+# ポイント単位のフォントサイズを設定します。
+font-size = 12
+
+# バリアブルフォントのバリエーション軸を設定します。
+# font-variation = 
+# font-variation-bold = 
+# font-variation-italic = 
+# font-variation-bold-italic = 
+
+# Unicodeの特定のコードポイント（または範囲）を特定のフォントにマッピングします。
+# font-codepoint-map = 
+
+# クリップボードへコピーする際に、特定のUnicodeコードポイントを置換します。
+# clipboard-codepoint-map = 
+
+# フォントを太く描画するかどうかを設定します（macOSのみ）。
+# font-thicken = 
+
+# font-thickenが有効な場合の太くする強度を設定します（0〜255）。
+# font-thicken-strength = 
+
+# フォントのシェーピングを複数のランに分割する位置を指定します（例: cursor でカーソル下の文字分割）。
+# font-shaping-break = 
+
+# アルファブレンドに使用するカラースペースを指定します（native, linear, linear-corrected）。
+# alpha-blending = 
+
+# --- セル・テキストの微調整 ---
+# セル幅とセルの高さをピクセルまたはパーセンテージで調整します。
+# adjust-cell-width = 
+# adjust-cell-height = 
+
+# テキストのベースライン位置を調整します。
+# adjust-font-baseline = 
+
+# 下線の位置と太さを調整します。
+# adjust-underline-position = 
+# adjust-underline-thickness = 
+
+# 打ち消し線の位置と太さを調整します。
+# adjust-strikethrough-position = 
+# adjust-strikethrough-thickness = 
+
+# 上線の位置と太さを調整します。
+# adjust-overline-position = 
+# adjust-overline-thickness = 
+
+# カーソルの太さと高さを調整します。
+# adjust-cursor-thickness = 
+# adjust-cursor-height = 
+
+# ボックス描画文字の太さを調整します。
+# adjust-box-thickness = 
+
+# Nerd Fontアイコンの最大高さを調整します。
+# adjust-icon-height = 
+
+# 書記素クラスターのセル幅計算メソッドを指定します（unicode または legacy）。
+# grapheme-width-method = 
+
+# FreeTypeのロードフラグを有効または無効にします（主にLinux向け）。
+# freetype-load-flags = 
+
+# --- テーマと色 ---
+# 使用するテーマを指定します（ライト・ダークで別テーマの設定も可能）。
+# theme = 
+
+# ウィンドウの背景色と前景色を指定します。
+background = #272822
+foreground = #F8F8F2
+
+# ターミナルの背景画像パスを設定します。
+# background-image = 
+
+# 背景画像の不透明度を設定します。
+# background-image-opacity = 
+
+# 背景画像の位置を指定します。
+# background-image-position = 
+
+# 背景画像のフィット方法を指定します（contain, cover, stretch, none）。
+# background-image-fit = 
+
+# 背景画像を繰り返すかどうかを指定します。
+# background-image-repeat = 
+
+# 選択範囲の前景色と背景色を指定します。
+# selection-foreground = 
+# selection-background = 
+
+# タイピング時に選択テキストをクリアするかどうかを指定します。
+# selection-clear-on-typing = 
+
+# コピー後に選択テキストをクリアするかどうかを指定します。
+# selection-clear-on-copy = 
+
+# ダブルクリック等によるテキスト選択時に、単語の境界と見なす文字を指定します。
+# selection-word-chars = 
+
+# 前景色と背景色の間の最小コントラスト比を指定します。
+# minimum-contrast = 
+
+# 256色パレットの色を指定します。
+palette = 0=#272822
+palette = 1=#F92672
+palette = 2=#A6E22E
+palette = 3=#F4BF75
+palette = 4=#66D9EF
+palette = 5=#AE81FF
+palette = 6=#A1EFE4
+palette = 7=#F8F8F2
+palette = 8=#75715E
+palette = 9=#F92672
+palette = 10=#A6E22E
+palette = 11=#F4BF75
+palette = 12=#66D9EF
+palette = 13=#AE81FF
+palette = 14=#A1EFE4
+palette = 15=#F9F8F5
+
+# 基本の16色から拡張256色パレットを自動生成するかどうかを指定します。
+# palette-generate = 
+
+# パレット自動生成が有効な場合、生成される色順を反転させます。
+# palette-harmonious = 
+
+# カーソルの色を指定します。
+# cursor-color = 
+
+# カーソルの不透明度（0〜1）を指定します。
+# cursor-opacity = 
+
+# デフォルトのカーソルスタイルを指定します（block, bar, underline, block_hollow）。
+cursor-style = bar
+
+# カーソルのデフォルトの点滅状態を設定します。
+cursor-style-blink = true
+
+# カーソル下のテキスト色を指定します。
+# cursor-text = 
+
+# プロンプト内のテキストをクリックしてカーソルを移動できるようにします。
+# cursor-click-to-move = 
+
+# タイピング中にマウスを直ちに非表示にします。
+# mouse-hide-while-typing = 
+
+# サーフェスを一番下までスクロールするタイミング（keystroke, output）を指定します。
+scroll-to-bottom = keystroke
+
+# 実行中のプログラムがマウスクリックに伴うShiftキーを検出できるかどうかを指定します。
+# mouse-shift-capture = 
+
+# アプリケーションに対するマウスレポートを有効にするかどうかを指定します。
+# mouse-reporting = 
+
+# マウスホイールのスクロール距離の乗数を指定します。
+mouse-scroll-multiplier = 2
+
+# 背景の不透明度（0〜1）を指定します。
+background-opacity = 0.9
+
+# 明示的に背景色が設定されたセルにも背景不透明度を適用します。
+# background-opacity-cells = 
+
+# 背景不透明度が1未満の場合に背景をぼかすかどうか（またはぼかし強度）を指定します。
+background-blur = true
+
+# フォーカスされていないスプリットの不透明度を指定します。
+# unfocused-split-opacity = 
+
+# フォーカスされていないスプリットを暗くする色を指定します。
+# unfocused-split-fill = 
+
+# スプリットディバイダーの色を指定します。
+# split-divider-color = 
+
+# ズーム状態のスプリットを維持する条件を設定します。
+# split-preserve-zoom = 
+
+# 非フォーカス時の検索一致の前景色と背景色を指定します。
+# search-foreground = 
+# search-background = 
+
+# フォーカス中（選択中）の検索一致の前景色と背景色を指定します。
+# search-selected-foreground = 
+# search-selected-background = 
+
+# --- コマンドと起動 ---
+# 実行するコマンド（通常はシェル）を指定します。
+# command = zsh --login
+
+# Ghostty起動時の最初のターミナルサーフェスでのみ実行するコマンドを指定します。
+# initial-command = 
+
+# コマンドの終了通知を送信するタイミング（never, unfocused, always）を指定します。
+# notify-on-command-finish = 
+
+# コマンド終了通知の通知方法（bell, notifyなど）を指定します。
+# notify-on-command-finish-action = 
+
+# コマンド終了通知が送られるまでの最低実行時間をを指定します。
+# notify-on-command-finish-after = 
+
+# 起動するコマンドに渡す追加の環境変数を指定します。
+# env = 
+
+# 起動時のコマンドに入力として送信するデータを指定します。
+# input = 
+
+# コマンド終了後もターミナルを開いたままにするかどうかを指定します。
+# wait-after-command = 
+
+# プロセス終了を異常と見なす実行時間（ミリ秒単位）を指定します。
+# abnormal-command-exit-runtime = 
+
+# --- スクロール・機能 ---
+# スクロールバックバッファの制限サイズをバイト単位で指定します。
+scrollback-limit = 1000000
+
+# スクロールバックバッファをスクロールするためのスクロールバーの表示タイミングを指定します。
+# scrollbar = 
+
+# 正規表現でテキストに一致させ、クリック時のアクションを関連付けます。
+# link = 
+
+# URLの自動マッチングを有効または無効にします。
+# link-url = 
+
+# マッチしたURLのリンクプレビューを表示するかどうかを指定します。
+link-previews = true
+
+# --- ウィンドウ ---
+# 新しいウィンドウを最大化状態で開始するかどうかを指定します。
+# maximize = 
+
+# 新しいウィンドウをフルスクリーンで開始するかどうかを指定します。
+# fullscreen = 
+
+# Ghosttyがウィンドウに使用する固定タイトルを指定します。
+# title = 
+
+# アプリケーションクラス値（WM_CLASSなど）を変更します（GTKのみ）。
+# class = 
+
+# X11環境下でのインスタンス名を制御します（GTKのみ）。
+# x11-instance-name = 
+
+# コマンド起動後の作業ディレクトリを指定します。
+# working-directory = 
+
+# --- キーバインド ---
+# キーバインディングを設定します。書式は trigger=action です。
+# keybind = ctrl+h=goto_split:left
+# keybind = ctrl+j=goto_split:bottom
+# keybind = ctrl+k=goto_split:top
+# keybind = ctrl+l=goto_split:right
+# keybind = ctrl+shift+v=new_split:right
+# keybind = ctrl+shift+s=new_split:bottom
+# keybind = ctrl+shift+w=close_surface
+keybind = global:alt+space=toggle_quick_terminal
+
+# Ghostty内で修飾キーをリマップします。
+# key-remap = 
+
+# --- ウィンドウ表示とUI ---
+# ウィンドウの左右および上下のパディングを指定します。
+window-padding-x = 5
+window-padding-y = 5
+
+# セルサイズで割り切れない余分なパディングを四辺でバランスよく配置します。
+# window-padding-balance = 
+
+# ウィンドウのパディング領域の色を指定します。
+# window-padding-color = 
+
+# レンダリングを画面のリフレッシュレートと同期します（macOS向け）。
+# window-vsync = 
+
+# 新規のウィンドウ、タブ、スプリットが以前の作業ディレクトリを継承するかどうかを指定します。
+# window-inherit-working-directory = 
+# tab-inherit-working-directory = 
+# split-inherit-working-directory = 
+
+# 新規のウィンドウやタブが以前のフォントサイズを継承するかどうかを指定します。
+# window-inherit-font-size = 
+
+# ウィンドウ装飾（タイトルバーなど）の表示・非表示等の優先度を指定します。
+window-decoration = true
+
+# ウィンドウやタブのタイトルに使用するフォントを指定します。
+# window-title-font-family = 
+
+# ウィンドウのサブタイトルテキストを指定します（GTKのみ）。
+# window-subtitle = 
+
+# ウィンドウのテーマを指定します。
+window-theme = dark
+
+# ターミナルの色を解釈する際に使用するカラースペースを指定します（macOSのみ）。
+# window-colorspace = 
+
+# 初期ウィンドウの高さと幅をセル単位で指定します。
+# window-height = 
+# window-width = 
+
+# 初期ウィンドウの位置をピクセル単位で指定します。
+# window-position-x = 
+# window-position-y = 
+
+# ウィンドウの状態の保存と復元を有効にするかどうかを指定します（macOSのみ）。
+# window-save-state = 
+
+# ウィンドウのサイズ変更をセル単位の増分で行うかどうかを指定します（macOSのみ）。
+# window-step-resize = 
+
+# 新しいタブが作成される位置を指定します。
+# window-new-tab-position = 
+
+# タブバーの表示設定を指定します（GTKのみ）。
+# window-show-tab-bar = 
+
+# ウィンドウのタイトルバーの背景色と前景色を指定します（GTKのみ）。
+# window-titlebar-background = 
+# window-titlebar-foreground = 
+
+# サイズ変更時のオーバーレイ表示タイミングを設定します。
+# resize-overlay = 
+# resize-overlay-position = 
+# resize-overlay-duration = 
+
+# --- その他の動作 ---
+# マウスの移動でフォーカスを切り替えるかどうかを指定します。
+focus-follows-mouse = true
+
+# 実行中のプログラムにシステムのクリップボードの読み書きを許可するかどうかを指定します。
+# clipboard-read = 
+# clipboard-write = 
+
+# クリップボードにコピーされるデータの末尾の空白をトリミングします。
+clipboard-trim-trailing-spaces = true
+
+# 安全でないテキストの貼り付けに対する確認等の保護機能を設定します。
+clipboard-paste-protection = true
+
+# ブラケットペーストを安全と見なすかどうかを指定します。
+# clipboard-paste-bracketed-safe = 
+
+# プログラムによるターミナルタイトルのクエリを許可するかどうかを指定します。
+# title-report = 
+
+# 画像データ用に使用できる最大バイト数を指定します。
+# image-storage-limit = 
+
+# 選択したテキストを自動的にクリップボードにコピーするかどうかを指定します。
+copy-on-select = clipboard
+
+# 右クリック時のアクションを指定します。
+# right-click-action = 
+
+# クリックをリピートと見なす間隔（ミリ秒）を指定します。
+# click-repeat-interval = 
+
+# 追加で読み込む設定ファイルのパスを指定します。
+# config-file = 
+
+# デフォルトの構成ファイルを読み込むかどうかを指定します（CLI専用）。
+# config-default-files = 
+
+# サーフェスを閉じる前に確認するかどうかを指定します。
+confirm-close-surface = true
+
+# 最後のサーフェスが閉じた後にアプリケーションを終了するかどうかを指定します。
+# quit-after-last-window-closed = 
+
+# 最後のウィンドウが閉じてから終了するまでの遅延時間を設定します（Linuxのみ）。
+# quit-after-last-window-closed-delay = 
+
+# 起動時に最初のウィンドウを作成するかどうかを制御します（Linux、macOSのみ）。
+# initial-window = 
+
+# アンドゥ操作が可能な時間を指定します（macOSのみ）。
+# undo-timeout = 
+
+# --- クイックターミナル ---
+# クイックターミナルの位置やサイズ、画面、アニメーション時間などを設定します。
+quick-terminal-position = top
+# quick-terminal-size = 
+# gtk-quick-terminal-layer = 
+# gtk-quick-terminal-namespace = 
+# quick-terminal-screen = 
+# quick-terminal-animation-duration = 
+# quick-terminal-autohide = 
+# quick-terminal-space-behavior = 
+# quick-terminal-keyboard-interactivity = 
+
+# --- シェル統合とパレット ---
+# シェル統合の自動インジェクション設定を指定します。
+shell-integration = detect
+
+# 有効にするシェル統合機能を指定します。
+# shell-integration-features = 
+
+# コマンドパレットへのカスタムエントリを追加します。
+# command-palette-entry = 
+
+# 色情報を要求するOSCシーケンスのレポート形式を指定します。
+# osc-color-report-format = 
+
+# "KAM"モード（ANSIモード2）の使用を許可するかどうかを指定します。
+# vt-kam-allowed = 
+
+# カスタムシェーダーのパスとそのアニメーションループの挙動を指定します。
+# custom-shader = 
+# custom-shader-animation = 
+
+# --- 通知・ベル設定 ---
+# 有効にするベルの機能を指定します。
+# bell-features = 
+# bell-audio-path = 
+# bell-audio-volume = 
+
+# アプリ内通知（トースト）の表示設定を指定します（GTKのみ）。
+# app-notifications = 
+
+# --- プラットフォーム固有 (macOS) ---
+# フルスクリーン時の挙動や、タイトルバー、ボタンなどを設定します。
+# macos-non-native-fullscreen = 
+# macos-window-buttons = 
+# macos-titlebar-style = 
+# macos-titlebar-proxy-icon = 
+# macos-dock-drop-behavior = 
+# macos-option-as-alt = 
+# macos-window-shadow = 
+# macos-hidden = 
+# macos-auto-secure-input = 
+# macos-secure-input-indication = 
+# macos-applescript = 
+
+# アプリアイコンに関する設定（macOSのみ）。
+# macos-icon = 
+# macos-custom-icon = 
+# macos-icon-frame = 
+# macos-icon-ghost-color = 
+# macos-icon-screen-color = 
+
+# macOSのShortcutsアプリによるGhosttyの制御を許可するかを指定します。
+# macos-shortcuts = 
+
+# 自動アップデートの設定（macOSのみ）。
+# auto-update = 
+# auto-update-channel = 
+
+# --- プラットフォーム固有 (Linux / GTK) ---
+# 各サーフェスをsystemdスコープに配置し、リソース制限を行います。
+linux-cgroup = always
+# linux-cgroup-memory-limit = 
+# linux-cgroup-processes-limit = 
+# linux-cgroup-hard-fail = 
+
+# GTKにおけるデバッグ表示やインスタンス、UI設定を指定します。
+# gtk-opengl-debug = 
+gtk-single-instance = true
+# gtk-titlebar = 
+gtk-tabs-location = top
+# gtk-titlebar-hide-when-maximized = 
+# gtk-toolbar-style = 
+# gtk-titlebar-style = 
+# gtk-wide-tabs = 
+# gtk-custom-css = 
+
+# --- その他 ---
+# アプリのデスクトップ通知機能を有効化するかどうか。
+# desktop-notifications = 
+
+# ターミナルで実行されるアプリケーションがプログレスバーを表示できるようにするかどうか。
+# progress-style = 
+
+# 太字に使用する色を変更します。
+# bold-color = 
+
+# 薄いテキストの不透明度を指定します。
+# faint-opacity = 
+
+# TERM環境変数を設定します。
+# term = 
+
+# ENQ (0x05) を受信したときに送信する文字列を指定します。
+# enquiry-response = 
+
+# async IOの低レベルAPIバックエンドを指定します（Linuxのみ）。
+# async-backend = 

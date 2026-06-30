@@ -17,3 +17,20 @@ setup-term: ## ターミナルの設定をシステムに適用します
 	else \
 		echo "Warning: dconf command not found, skipping Tilix setup"; \
 	fi
+	@# tmux
+	@if [ -f "$(HOME)/.tmux.conf" ] && [ ! -L "$(HOME)/.tmux.conf" ]; then \
+		TIMESTAMP=$$(date +%Y%m%d_%H%M%S); \
+		mv "$(HOME)/.tmux.conf" "$(HOME)/.tmux.conf.bak.$$TIMESTAMP"; \
+		echo "Backed up existing tmux config to .tmux.conf.bak.$$TIMESTAMP"; \
+	fi
+	ln -sfn "$(CURDIR)/tmux/tmux.conf" "$(HOME)/.tmux.conf"
+	@if [ ! -d "$(HOME)/.tmux/plugins/tpm" ]; then \
+		echo "Installing Tmux Plugin Manager (TPM)..."; \
+		mkdir -p "$(HOME)/.tmux/plugins"; \
+		git clone https://github.com/tmux-plugins/tpm "$(HOME)/.tmux/plugins/tpm"; \
+	fi
+	@if command -v tmux >/dev/null 2>&1 && [ -f "$(HOME)/.tmux/plugins/tpm/bin/install_plugins" ]; then \
+		echo "Installing tmux plugins via TPM..."; \
+		"$(HOME)/.tmux/plugins/tpm/bin/install_plugins" || true; \
+	fi
+
