@@ -214,7 +214,7 @@ background-blur = true
 
 # --- コマンドと起動 ---
 # 実行するコマンド（通常はシェル）を指定します。
-command = zsh --login
+# command = zsh --login
 
 # Ghostty起動時の最初のターミナルサーフェスでのみ実行するコマンドを指定します。
 # initial-command = 
