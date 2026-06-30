@@ -28,7 +28,9 @@ setup-term: ## ターミナルの設定をシステムに適用します
 		echo "Installing Tmux Plugin Manager (TPM)..."; \
 		mkdir -p "$(HOME)/.tmux/plugins"; \
 		git clone https://github.com/tmux-plugins/tpm "$(HOME)/.tmux/plugins/tpm"; \
+	fi
+	@if command -v tmux >/dev/null 2>&1 && [ -f "$(HOME)/.tmux/plugins/tpm/bin/install_plugins" ]; then \
 		echo "Installing tmux plugins via TPM..."; \
-		"$(HOME)/.tmux/plugins/tpm/bin/install_plugins"; \
+		"$(HOME)/.tmux/plugins/tpm/bin/install_plugins" || true; \
 	fi
 
