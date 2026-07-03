@@ -17,7 +17,7 @@ This repository is part of the **dotfiles polyrepo** managed by [dotfiles-core](
 # PROJECT KNOWLEDGE BASE
 
 **Repository:** dotfiles-term
-**Role:** Terminal emulator configuration — WezTerm, Tilix, Ghostty, and other terminal settings
+**Role:** Terminal emulator/multiplexer configuration — WezTerm, Tilix, Ghostty, tmux, and other terminal settings
 
 ## STRUCTURE
 
@@ -30,6 +30,8 @@ dotfiles-term/
 ├── ghostty/                    # Ghostty terminal config
 │   └── config                  # [Link Target] Ghostty configuration → ~/.config/ghostty/config
 ├── ghostty-src/                # Ghostty source code (for reference)
+├── tmux/                       # tmux multiplexer config
+│   └── tmux.conf               # [Link Target] tmux config → ~/.tmux.conf (session restore: resurrect+continuum)
 ├── _mk/                        # Makefile sub-targets
 └── ...
 ```
@@ -41,6 +43,10 @@ dotfiles-term/
 - `tilix/tilix.dconf` is a dconf export — applied via `dconf load`, NOT linked.
 - `wezterm.lua` is linked to `~/.wezterm.lua` via `ln -sfn` in the Makefile (`make setup`).
 - `ghostty/config` is linked to `~/.config/ghostty/config` via `ln -sfn` in the Makefile (`make setup`).
+- `tmux/tmux.conf` is linked to `~/.tmux.conf` via `ln -sfn` in the Makefile (`make setup`); TPM is auto-cloned and its plugins auto-installed by the Makefile.
+- **tmux session restore:** `tmux-resurrect` + `tmux-continuum` (`@continuum-restore 'on'`) restore the previous session on tmux server start. `tmux-continuum` MUST remain the LAST `@plugin` — it appends an auto-save hook to `status-right`, and theme/status plugins (`catppuccin`, `tmux-colortag`, `tmux-cpu`) loaded after it would overwrite the hook and silently break auto-save.
+- **tmux status bar:** `set-environment -g TMUX_COLORTAG_TAG_ONLY yes` prevents `tmux-colortag` from overwriting the custom `status-left`/`status-right` (window-tab coloring is preserved).
+- `ghostty/config` sets `command = tmux`, so every Ghostty surface (window/tab/split) launches tmux; this requires `tmux` to be on Ghostty's PATH.
 - Terminal emulator configs that live under `~/.config/<tool>/` should mirror that directory structure at repo root.
 
 ## CODE STYLE

@@ -151,7 +151,7 @@ palette = 15=#F9F8F5
 # palette-harmonious = 
 
 # カーソルの色を指定します。
-# cursor-color = 
+cursor-color = #F8F8F2
 
 # カーソルの不透明度（0〜1）を指定します。
 # cursor-opacity = 
@@ -215,6 +215,11 @@ background-blur = true
 # --- コマンドと起動 ---
 # 実行するコマンド（通常はシェル）を指定します。
 # command = zsh --login
+# 新規サーフェス(ウィンドウ/タブ/スプリット)すべてで tmux を起動する。
+# tmux サーバは共有され、各サーフェスは個別セッションになる。
+# サーバ初回起動時に tmux-continuum が前回セッションを自動復元する。
+# PATH に tmux が直接見えない場合にも対応するため、ログインシェル経由で PATH を確立して tmux を起動する。
+command = zsh --login -c tmux
 
 # Ghostty起動時の最初のターミナルサーフェスでのみ実行するコマンドを指定します。
 # initial-command = 
