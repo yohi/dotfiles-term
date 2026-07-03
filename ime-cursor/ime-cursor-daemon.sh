@@ -45,6 +45,8 @@ color_for_engine() {
 # process substitution 等で stdin が端末でなくなっていても /dev/tty が制御端末を
 # 指すため、まず /dev/tty を試す。/dev/tty が使えない場合のみ、テスト・手動
 # 呼び出し用の TTY 環境変数、または tty コマンドをフォールバックする。
+# systemd ユーザサービス等で制御端末がない場合は、自ユーザー所有の /dev/pts/*
+# から最新の書き込み可能な端末をさらにフォールバックする。
 # shellcheck disable=SC2329 # invoked by broadcast_cursor_color
 current_tty() {
 	local tty
@@ -59,6 +61,9 @@ current_tty() {
 		return 0
 	fi
 	tty="$(tty 2>/dev/null || true)"
+	[ -n "$tty" ] && [ -w "$tty" ] || {
+		tty="$(find /dev/pts -maxdepth 1 -type c -user "$(id -u)" -writable -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -n1 | cut -d' ' -f2- || true)"
+	}
 	[ -n "$tty" ] && [ -w "$tty" ] || return 0
 	printf '%s' "$tty"
 }
@@ -137,6 +142,17 @@ resolve_ibus_address() {
 
 main() {
 	log "starting (ON=$IME_ON_COLOR OFF=$IME_OFF_COLOR)"
+	local missing=""
+	local cmd
+	for cmd in gdbus ibus timeout; do
+		if ! command -v "$cmd" >/dev/null 2>&1; then
+			missing="${missing}${missing:+, }$cmd"
+		fi
+	done
+	if [ -n "$missing" ]; then
+		log "required commands missing: $missing"
+		return 1
+	fi
 
 	local addr line engine
 	while true; do
@@ -159,7 +175,7 @@ main() {
 				apply_engine "$engine"
 				;;
 			esac
-		done < <(gdbus monitor --address "$addr" --dest org.freedesktop.IBus --object-path /org/freedesktop/IBus 2>/dev/null)
+		done < <(gdbus monitor --address "$addr" --dest org.freedesktop.IBus --object-path /org/freedesktop/IBus)
 
 		log "monitor ended; reconnecting in 2s"
 		sleep 2

@@ -4,6 +4,8 @@ Documentation=https://github.com/yohi/dotfiles-term
 # グラフィカルセッション配下で常駐させる (IBus / 端末が利用可能な文脈)。
 PartOf=graphical-session.target
 After=graphical-session.target
+StartLimitIntervalSec=30
+StartLimitBurst=5
 
 [Service]
 Type=simple
