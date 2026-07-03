@@ -70,7 +70,7 @@ GPU アクセラレーション対応ターミナルの Lua 設定。
 
 ### 4.3 Ghostty (`ghostty/config`)
 
-高速・ネイティブなターミナル Ghostty の設定。フォント（Cica）・Monokai 系配色・背景ぼかしなどに加え、`command = tmux` により全サーフェスで tmux を起動する（→ 6 章）。
+高速・ネイティブなターミナル Ghostty の設定。フォント（Cica）・Monokai 系配色・背景ぼかしなどに加え、`command = zsh --login -c tmux` によりログインシェル経由で PATH を確立したうえで全サーフェスで tmux を起動する（→ 6 章）。
 
 ### 4.4 tmux (`tmux/tmux.conf`)
 
