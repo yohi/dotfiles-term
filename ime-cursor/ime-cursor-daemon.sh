@@ -8,6 +8,10 @@
 #
 #   検知: gdbus monitor で org.freedesktop.IBus の GlobalEngineChanged を購読。
 #   反映: 制御端末へ OSC 12 を送出する。
+#         制御端末または環境変数 TTY で明示された端末のみに送る。
+#         制御端末がない場合は送出せず、別セッションの pts への誤送信を防ぐ。
+#         (IBus のグローバルエンジンはセッション全体で 1 つだが、
+#          実際に入力を受けているのはアクティブな端末のみ。)
 #         制御端末が特定できない場合のみ、自ユーザの pts を列挙してフォールバックする。
 #         (IBus のグローバルエンジンはセッション全体で 1 つだが、
 #          実際に入力を受けているのはアクティブな端末のみ。)
@@ -62,54 +66,37 @@ current_tty() {
 # Bash 組み込み printf からのリダイレクトでも大抵は atomic だが、
 # 確実性を高めるため /usr/bin/printf を優先する。
 # 詰まった pts への書き込みが無限にブロックしないよう timeout 0.2 で保護する。
-# shellcheck disable=SC2329 # invoked inside background jobs spawned by broadcast_cursor_color
+# 失敗時は exit 1 を返す。
+# shellcheck disable=SC2329 # invoked by broadcast_cursor_color
 write_seq_atomic() {
 	local seq="$1"
 	local pts="$2"
 	if [ -x /usr/bin/printf ]; then
-		timeout 0.2 /usr/bin/printf '%s' "$seq" >"$pts" 2>/dev/null || true
+		timeout 0.2 /usr/bin/printf '%s' "$seq" >"$pts" 2>/dev/null
 	else
-		timeout 0.2 printf '%s' "$seq" >"$pts" 2>/dev/null || true
+		timeout 0.2 printf '%s' "$seq" >"$pts" 2>/dev/null
 	fi
 }
-# current_tty() は /dev/tty を優先する。/dev/tty が使えない場合に限り、
-# 環境変数 TTY で対象端末を指定できる。
+# OSC 12 (カーソル色設定) を制御端末または TTY 環境変数で明示された端末へ送出する。
 # /dev/pts/N への書き込みは端末出力として解釈され、シェルの stdin には注入されない。
+# 制御端末がなく、TTY も設定されていない場合は送出せず、別セッションの pts への
+# 誤送信を防ぐ。
 broadcast_cursor_color() {
 	local color="$1"
-	local seq
+	local seq pts
 	seq="$(printf '\033]12;%s\007' "$color")"
-	local pts sent="" wpids=""
 	pts="$(current_tty)"
-	if [ -n "$pts" ]; then
-		# 制御端末が取得できた場合は、そこだけに送る。
-		# IBus のグローバルエンジンはセッション全体で 1 つだが、実際に
-		# 入力を受けているのはアクティブな端末のみ。tmux 内部の pane や
-		# 別セッションの pts まで送ると、Ghostty 経由で可視端末に届かない、
-		# あるいは予期しない端末出力として流れる恐れがある。
-		if [ -w "$pts" ]; then
-			{ write_seq_atomic "$seq" "$pts" || true; } &
-			wpids="$wpids $!"
-			sent="$sent $pts"
+
+	if [ -n "$pts" ] && [ -w "$pts" ]; then
+		if write_seq_atomic "$seq" "$pts"; then
+			log "applied $color to $pts"
+		else
+			log "failed to apply $color to $pts"
 		fi
+	elif [ -n "$pts" ]; then
+		log "skipped $color (not writable: $pts)"
 	else
-		# 制御端末が特定できない場合のみ、自ユーザの pts を列挙してフォールバック。
-		local uid
-		uid="$(id -u)"
-		while IFS= read -r pts; do
-			[ -n "$pts" ] || continue
-			[ -w "$pts" ] || continue
-			{ write_seq_atomic "$seq" "$pts" || true; } &
-			wpids="$wpids $!"
-			sent="$sent $pts"
-		done < <(find /dev/pts -maxdepth 1 -type c -uid "$uid" ! -name ptmx 2>/dev/null)
-	fi
-	# shellcheck disable=SC2086 # wpids is intentionally space-separated PIDs
-	[ -n "$wpids" ] && wait $wpids 2>/dev/null || true
-	if [ -n "$sent" ]; then
-		log "applied $color to:$sent"
-	else
-		log "applied $color (no writable pts found)"
+		log "skipped $color (no controlling terminal)"
 	fi
 }
 
