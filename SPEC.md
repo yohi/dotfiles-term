@@ -9,7 +9,7 @@
 
 - **役割**: WezTerm・Tilix・Ghostty・tmux の設定を一元管理し、`make setup` でシステムへ配備する。
 - **配備方式**: シンボリックリンク（tmux / WezTerm / Ghostty）または dconf ロード（Tilix）で適用する。
-- **依存**: 親ディレクトリの `../common-mk/`（`_mk/` から固定相対パスで include）。
+- **依存**: ポリレポ直下の `common-mk/`（`_mk/` 配下の `.mk` が `../../../common-mk/` への固定相対シンボリックリンクとして include）。
 
 ## 2. ディレクトリ構成
 
