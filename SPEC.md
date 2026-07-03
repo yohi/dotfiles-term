@@ -9,7 +9,7 @@
 
 - **役割**: WezTerm・Tilix・Ghostty・tmux の設定を一元管理し、`make setup` でシステムへ配備する。
 - **配備方式**: シンボリックリンク（tmux / WezTerm / Ghostty）または dconf ロード（Tilix）で適用する。
-- **依存**: 親ディレクトリの `../common-mk/`（`_mk/` から固定相対パスで include）。
+- **依存**: ポリレポ直下の `common-mk/`（`_mk/` 配下の `.mk` が `../../../common-mk/` への固定相対シンボリックリンクとして include）。
 
 ## 2. ディレクトリ構成
 
@@ -70,7 +70,7 @@ GPU アクセラレーション対応ターミナルの Lua 設定。
 
 ### 4.3 Ghostty (`ghostty/config`)
 
-高速・ネイティブなターミナル Ghostty の設定。フォント（Cica）・Monokai 系配色・背景ぼかしなどに加え、`command = tmux` により全サーフェスで tmux を起動する（→ 6 章）。
+高速・ネイティブなターミナル Ghostty の設定。フォント（Cica）・Monokai 系配色・背景ぼかしなどに加え、`command = zsh --login -c tmux` によりログインシェル経由で PATH を確立したうえで全サーフェスで tmux を起動する（→ 6 章）。
 
 ### 4.4 tmux (`tmux/tmux.conf`)
 
@@ -103,11 +103,11 @@ GPU アクセラレーション対応ターミナルの Lua 設定。
 
 ## 6. Ghostty × tmux 連携
 
-`ghostty/config` の `command = tmux` により、Ghostty の各サーフェス（ウィンドウ／タブ／スプリット）は tmux 上で起動する。
+`ghostty/config` の `command = zsh --login -c tmux` により、Ghostty の各サーフェス（ウィンドウ／タブ／スプリット）はログインシェル経由で PATH を確立したうえで tmux 上で起動する。
 
 - 各サーフェスは共有 tmux サーバ上の個別セッションになる。
 - サーバ初回起動時に tmux-continuum が前回セッションを自動復元する。
-- **前提**: `tmux` が Ghostty の PATH 上にあること。見つからない場合のフォールバックは `command = zsh --login -c tmux`（ログインシェル経由で PATH を確立する）。
+- ログインシェル経由で PATH を確立してから tmux を起動するため、`tmux` が Ghostty の直接の PATH に無くても起動できる。
 
 ## 7. 制約・禁止事項
 
