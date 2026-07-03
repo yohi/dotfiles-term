@@ -18,6 +18,7 @@
 - **WezTerm 設定**: 高機能な GPU 加速ターミナル WezTerm の Lua 設定。
 - **Tilix 統合**: タイリングターミナル Tilix の設定（dconf）管理。
 - **Ghostty 設定**: 高速かつネイティブなターミナル Ghostty の設定管理。
+- **tmux 設定**: tmux-resurrect / tmux-continuum によるセッション自動保存・復元に対応した tmux 設定の管理。
 
 ## ターゲット
 
@@ -35,5 +36,6 @@
 ├── tilix/                  # Tilix 設定 (dconf)
 ├── ghostty/                # Ghostty 設定
 ├── ghostty-src/            # Ghostty ソース（参照）
+├── tmux/                   # tmux 設定 (tmux.conf、セッション復元)
 └── wezterm.lua             # WezTerm 設定 (Lua)
 ```
