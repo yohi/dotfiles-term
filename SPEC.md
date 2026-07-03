@@ -107,7 +107,7 @@ GPU アクセラレーション対応ターミナルの Lua 設定。
 
 - 各サーフェスは共有 tmux サーバ上の個別セッションになる。
 - サーバ初回起動時に tmux-continuum が前回セッションを自動復元する。
-- **前提**: `tmux` が Ghostty の PATH 上にあること。`ghostty/config` では `command = zsh --login -c tmux` とし、ログインシェル経由で PATH を確立してから tmux を起動する。
+- ログインシェル経由で PATH を確立してから tmux を起動するため、`tmux` が Ghostty の直接の PATH に無くても起動できる。
 
 ## 7. 制約・禁止事項
 
