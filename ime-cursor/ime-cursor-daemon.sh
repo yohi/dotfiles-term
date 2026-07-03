@@ -7,7 +7,10 @@
 # Vim の IME 連動カーソルを、シェルを含む端末全体へ拡張したもの。
 #
 #   検知: gdbus monitor で org.freedesktop.IBus の GlobalEngineChanged を購読。
-#   反映: 自ユーザが所有する擬似端末 (/dev/pts/*) へ OSC 12 をブロードキャスト。
+#   反映: 制御端末へ OSC 12 を送出する。
+#         制御端末が特定できない場合のみ、自ユーザの pts を列挙してフォールバックする。
+#         (IBus のグローバルエンジンはセッション全体で 1 つだが、
+#          実際に入力を受けているのはアクティブな端末のみ。)
 #         (IBus のグローバルエンジンはセッション全体で 1 つのため、全端末へ反映するのが整合的)
 #
 # 環境変数で色を上書き可能:
@@ -35,31 +38,63 @@ color_for_engine() {
 	esac
 }
 
-# OSC 12 (カーソル色設定) を自ユーザの全 pts へ送出する。
+# 制御端末を返す。取得できなければ空文字列。
+# process substitution 等で stdin が端末でなくなっていても /dev/tty が制御端末を
+# 指すため、まず /dev/tty を試す。テスト・手動呼び出し用に TTY 環境変数でも
+# 上書き可能にする。
+# shellcheck disable=SC2329 # invoked by broadcast_cursor_color
+current_tty() {
+	local tty
+	if [ -w /dev/tty ]; then
+		printf '%s' /dev/tty
+		return 0
+	fi
+	if [ -n "${TTY:-}" ] && [ -w "${TTY:-}" ]; then
+		printf '%s' "$TTY"
+		return 0
+	fi
+	tty="$(tty 2>/dev/null || true)"
+	[ -n "$tty" ] && [ -w "$tty" ] || return 0
+	printf '%s' "$tty"
+}
+# OSC 12 (カーソル色設定) を制御端末へ送出する。
 # /dev/pts/N への書き込みは端末出力として解釈され、シェルの stdin には注入されない。
+# 環境変数 TTY で対象端末を明示できる。
 broadcast_cursor_color() {
 	local color="$1"
 	local seq
 	seq="$(printf '\033]12;%s\007' "$color")"
 
-	# /proc/*/environ の読み取りは特定プロセス状態 (D-state 等) でブロックし得るため
-	# 使わない。devpts の所有者は端末を開いた本人なので、find で自ユーザの
-	# pts を直接列挙する。IBus のグローバルエンジンはセッション全体で 1 つなので、
-	# 自分の全端末へ反映するのが整合的。
-	local uid pts sent="" wpids=""
-	uid="$(id -u)"
-	while IFS= read -r pts; do
-		[ -n "$pts" ] || continue
-		[ -w "$pts" ] || continue
-		# 端末が出力を吸えない (ハングした端末) 場合に write が無限ブロック
-		# しないよう timeout 付きで、かつ pts ごとに並列送出する。
-		{ printf '%s' "$seq" 2>/dev/null | timeout 0.2 tee -- "$pts" >/dev/null 2>&1 || true; } &
-		wpids="$wpids $!"
-		sent="$sent $pts"
-	done < <(find /dev/pts -maxdepth 1 -type c -uid "$uid" ! -name ptmx 2>/dev/null)
-	# 明示した書き込みプロセスのみ待機 (gdbus monitor 等は待たない)
-	[ -n "$wpids" ] && wait $wpids 2>/dev/null || true
 
+	local pts sent="" wpids=""
+	pts="$(current_tty)"
+	if [ -n "$pts" ]; then
+		# 制御端末が取得できた場合は、そこだけに送る。
+		# IBus のグローバルエンジンはセッション全体で 1 つだが、実際に
+		# 入力を受けているのはアクティブな端末のみ。tmux 内部の pane や
+		# 別セッションの pts まで送ると、Ghostty 経由で可視端末に届かない、
+		# あるいは予期しない端末出力として流れる恐れがある。
+		if [ -w "$pts" ]; then
+			{ printf '%s' "$seq" >"$pts" 2>/dev/null || true; } &
+			wpids="$wpids $!"
+			sent="$sent $pts"
+		fi
+	else
+		# 制御端末が特定できない場合のみ、自ユーザの pts を列挙してフォールバック。
+		local uid
+		uid="$(id -u)"
+		while IFS= read -r pts; do
+			[ -n "$pts" ] || continue
+			[ -w "$pts" ] || continue
+			{ printf '%s' "$seq" >"$pts" 2>/dev/null || true; } &
+			wpids="$wpids $!"
+			sent="$sent $pts"
+		done < <(find /dev/pts -maxdepth 1 -type c -uid "$uid" ! -name ptmx 2>/dev/null)
+	fi
+
+
+	# shellcheck disable=SC2086 # wpids is intentionally space-separated PIDs
+	[ -n "$wpids" ] && wait $wpids 2>/dev/null || true
 	if [ -n "$sent" ]; then
 		log "applied $color to:$sent"
 	else
