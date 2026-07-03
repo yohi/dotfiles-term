@@ -57,6 +57,20 @@ current_tty() {
 	[ -n "$tty" ] && [ -w "$tty" ] || return 0
 	printf '%s' "$tty"
 }
+# 単一の write システムコールで seq を pts に書き込む。
+# Bash 組み込み printf からのリダイレクトでも大抵は atomic だが、
+# 確実性を高めるため /usr/bin/printf を優先する。
+# 詰まった pts への書き込みが無限にブロックしないよう timeout 0.2 で保護する。
+# shellcheck disable=SC2329 # invoked inside background jobs spawned by broadcast_cursor_color
+write_seq_atomic() {
+	local seq="$1"
+	local pts="$2"
+	if [ -x /usr/bin/printf ]; then
+		timeout 0.2 /usr/bin/printf '%s' "$seq" >"$pts" 2>/dev/null || true
+	else
+		timeout 0.2 printf '%s' "$seq" >"$pts" 2>/dev/null || true
+	fi
+}
 # OSC 12 (カーソル色設定) を制御端末へ送出する。
 # /dev/pts/N への書き込みは端末出力として解釈され、シェルの stdin には注入されない。
 # 環境変数 TTY で対象端末を明示できる。
@@ -75,7 +89,7 @@ broadcast_cursor_color() {
 		# 別セッションの pts まで送ると、Ghostty 経由で可視端末に届かない、
 		# あるいは予期しない端末出力として流れる恐れがある。
 		if [ -w "$pts" ]; then
-			{ printf '%s' "$seq" >"$pts" 2>/dev/null || true; } &
+			{ write_seq_atomic "$seq" "$pts" || true; } &
 			wpids="$wpids $!"
 			sent="$sent $pts"
 		fi
@@ -86,7 +100,7 @@ broadcast_cursor_color() {
 		while IFS= read -r pts; do
 			[ -n "$pts" ] || continue
 			[ -w "$pts" ] || continue
-			{ printf '%s' "$seq" >"$pts" 2>/dev/null || true; } &
+			{ write_seq_atomic "$seq" "$pts" || true; } &
 			wpids="$wpids $!"
 			sent="$sent $pts"
 		done < <(find /dev/pts -maxdepth 1 -type c -uid "$uid" ! -name ptmx 2>/dev/null)
