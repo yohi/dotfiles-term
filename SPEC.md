@@ -103,11 +103,11 @@ GPU アクセラレーション対応ターミナルの Lua 設定。
 
 ## 6. Ghostty × tmux 連携
 
-`ghostty/config` の `command = tmux` により、Ghostty の各サーフェス（ウィンドウ／タブ／スプリット）は tmux 上で起動する。
+`ghostty/config` の `command = zsh --login -c tmux` により、Ghostty の各サーフェス（ウィンドウ／タブ／スプリット）はログインシェル経由で PATH を確立したうえで tmux 上で起動する。
 
 - 各サーフェスは共有 tmux サーバ上の個別セッションになる。
 - サーバ初回起動時に tmux-continuum が前回セッションを自動復元する。
-- **前提**: `tmux` が Ghostty の PATH 上にあること。見つからない場合のフォールバックは `command = zsh --login -c tmux`（ログインシェル経由で PATH を確立する）。
+- **前提**: `tmux` が Ghostty の PATH 上にあること。`ghostty/config` では `command = zsh --login -c tmux` とし、ログインシェル経由で PATH を確立してから tmux を起動する。
 
 ## 7. 制約・禁止事項
 
