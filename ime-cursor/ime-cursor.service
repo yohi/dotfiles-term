@@ -1,0 +1,17 @@
+[Unit]
+Description=IME-aware terminal cursor color (IBus GlobalEngineChanged -> OSC 12)
+Documentation=https://github.com/yohi/dotfiles-term
+# グラフィカルセッション配下で常駐させる (IBus / 端末が利用可能な文脈)。
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/ime-cursor-daemon.sh
+Restart=on-failure
+RestartSec=2
+# 色を変えたい場合は以下を有効化 (例):
+# Environment=IME_ON_COLOR=#F92672 IME_OFF_COLOR=#F8F8F2
+
+[Install]
+WantedBy=graphical-session.target
