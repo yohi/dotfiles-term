@@ -34,3 +34,15 @@ setup-term: ## ターミナルの設定をシステムに適用します
 		"$(HOME)/.tmux/plugins/tpm/bin/install_plugins" || true; \
 	fi
 
+	@# IME 連動カーソル色デーモン (IBus GlobalEngineChanged -> OSC 12)
+	mkdir -p "$(HOME)/.local/bin"
+	chmod +x "$(CURDIR)/ime-cursor/ime-cursor-daemon.sh"
+	ln -sfn "$(CURDIR)/ime-cursor/ime-cursor-daemon.sh" "$(HOME)/.local/bin/ime-cursor-daemon.sh"
+	mkdir -p "$(HOME)/.config/systemd/user"
+	ln -sfn "$(CURDIR)/ime-cursor/ime-cursor.service" "$(HOME)/.config/systemd/user/ime-cursor.service"
+	@if command -v systemctl >/dev/null 2>&1; then \
+		systemctl --user daemon-reload || true; \
+		systemctl --user enable --now ime-cursor.service || echo "Warning: could not enable ime-cursor.service (user systemd session not available?)"; \
+	else \
+		echo "Warning: systemctl not found, skipping ime-cursor.service setup"; \
+	fi
