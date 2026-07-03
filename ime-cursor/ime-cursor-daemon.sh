@@ -11,7 +11,6 @@
 #         制御端末が特定できない場合のみ、自ユーザの pts を列挙してフォールバックする。
 #         (IBus のグローバルエンジンはセッション全体で 1 つだが、
 #          実際に入力を受けているのはアクティブな端末のみ。)
-#         (IBus のグローバルエンジンはセッション全体で 1 つのため、全端末へ反映するのが整合的)
 #
 # 環境変数で色を上書き可能:
 #   IME_ON_COLOR  (default: #F92672)  日本語入力  (mozc-jp / mozc-on)
@@ -40,12 +39,14 @@ color_for_engine() {
 
 # 制御端末を返す。取得できなければ空文字列。
 # process substitution 等で stdin が端末でなくなっていても /dev/tty が制御端末を
-# 指すため、まず /dev/tty を試す。テスト・手動呼び出し用に TTY 環境変数でも
-# 上書き可能にする。
+# 指すため、まず /dev/tty を試す。/dev/tty が使えない場合のみ、テスト・手動
+# 呼び出し用の TTY 環境変数、または tty コマンドをフォールバックする。
 # shellcheck disable=SC2329 # invoked by broadcast_cursor_color
 current_tty() {
 	local tty
-	if [ -w /dev/tty ]; then
+	# /dev/tty は存在していても制御端末がない場合に開けないことがあるため、
+	# 実際に書き込みオープンできるかをサブシェルで確認する。
+	if (exec 3>/dev/tty) 2>/dev/null; then
 		printf '%s' /dev/tty
 		return 0
 	fi
@@ -71,15 +72,13 @@ write_seq_atomic() {
 		timeout 0.2 printf '%s' "$seq" >"$pts" 2>/dev/null || true
 	fi
 }
-# OSC 12 (カーソル色設定) を制御端末へ送出する。
+# current_tty() は /dev/tty を優先する。/dev/tty が使えない場合に限り、
+# 環境変数 TTY で対象端末を指定できる。
 # /dev/pts/N への書き込みは端末出力として解釈され、シェルの stdin には注入されない。
-# 環境変数 TTY で対象端末を明示できる。
 broadcast_cursor_color() {
 	local color="$1"
 	local seq
 	seq="$(printf '\033]12;%s\007' "$color")"
-
-
 	local pts sent="" wpids=""
 	pts="$(current_tty)"
 	if [ -n "$pts" ]; then
@@ -105,8 +104,6 @@ broadcast_cursor_color() {
 			sent="$sent $pts"
 		done < <(find /dev/pts -maxdepth 1 -type c -uid "$uid" ! -name ptmx 2>/dev/null)
 	fi
-
-
 	# shellcheck disable=SC2086 # wpids is intentionally space-separated PIDs
 	[ -n "$wpids" ] && wait $wpids 2>/dev/null || true
 	if [ -n "$sent" ]; then
@@ -121,7 +118,15 @@ apply_engine() {
 	[ -n "$engine" ] || return 0
 	broadcast_cursor_color "$(color_for_engine "$engine")"
 }
-
+# gdbus monitor の GlobalEngineChanged 行から engine 名を抽出する。
+# 出力例: /org/freedesktop/IBus: org.freedesktop.IBus.GlobalEngineChanged ('mozc-jp',)
+# 行内の他の引用符付き値があっても、第 1 引数部分だけを取り出す。
+extract_engine_from_line() {
+	local line="$1"
+	local engine
+	engine="$(printf '%s' "$line" | sed -n "s/.*GlobalEngineChanged[^']*'\([^']*\)'.*/\1/p")"
+	printf '%s' "$engine"
+}
 # IBus のプライベートバスアドレスを解決する。
 # `ibus address` が使えないセッション (DISPLAY 未設定等) では
 # ~/.cache/ibus/dbus-* ソケットから最新のものをフォールバックで拾う。
@@ -146,7 +151,7 @@ resolve_ibus_address() {
 main() {
 	log "starting (ON=$IME_ON_COLOR OFF=$IME_OFF_COLOR)"
 
-	local addr line rest engine
+	local addr line engine
 	while true; do
 		if ! addr="$(resolve_ibus_address)"; then
 			log "ibus address not found; retrying in 3s"
@@ -163,8 +168,7 @@ main() {
 			case "$line" in
 			*GlobalEngineChanged*)
 				# 例: /org/freedesktop/IBus: org.freedesktop.IBus.GlobalEngineChanged ('mozc-jp',)
-				rest="${line#*\'}"
-				engine="${rest%%\'*}"
+				engine="$(extract_engine_from_line "$line")"
 				apply_engine "$engine"
 				;;
 			esac
