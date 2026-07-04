@@ -13,9 +13,10 @@ fi
 
 # 選択肢の作成
 # 1. 新規セッション
-# 2. 通常のzsh
-# 3. 既存のtmuxセッション一覧
-menu_options=("[New Session]" "[Normal Shell]")
+# 2. デフォルトレイアウト (左1、右上下2)
+# 3. 通常のzsh
+# 4. 既存のtmuxセッション一覧
+menu_options=("[New Session]" "[Default Layout]" "[Normal Shell]")
 
 if command -v tmux &> /dev/null; then
     # 既存セッションの取得
@@ -41,6 +42,26 @@ elif [[ "$choice" == "[New Session]" ]]; then
     else
         exec tmux new-session -s "$name"
     fi
+elif [[ "$choice" == "[Default Layout]" ]]; then
+    # 重複しないセッション名を決定
+    base_name="default"
+    session_name="$base_name"
+    idx=1
+    while tmux has-session -t "$session_name" 2>/dev/null; do
+        session_name="${base_name}-${idx}"
+        idx=$((idx + 1))
+    done
+
+    # セッションをバックグラウンドで作成
+    tmux new-session -d -s "$session_name"
+    # 左右に50%ずつ分割 (左:ペイン0, 右:ペイン1)
+    tmux split-window -h -t "$session_name"
+    # 右側のペイン(ペイン1)を上下に分割
+    tmux split-window -v -t "$session_name":.1
+    # 左側のペイン(ペイン0)にフォーカスを戻す
+    tmux select-pane -t "$session_name":.0
+    # アタッチ
+    exec tmux attach-session -t "$session_name"
 elif [[ "$choice" == "[Normal Shell]" ]]; then
     exec zsh
 else
