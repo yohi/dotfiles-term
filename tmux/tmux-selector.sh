@@ -15,19 +15,19 @@ fi
 # 1. 新規セッション
 # 2. 通常のzsh
 # 3. 既存のtmuxセッション一覧
-options=("[New Session]" "[Normal Shell]")
+menu_options=("[New Session]" "[Normal Shell]")
 
 if command -v tmux &> /dev/null; then
     # 既存セッションの取得
     while IFS= read -r line; do
         if [[ -n "$line" ]]; then
-            options+=("$line")
+            menu_options+=("$line")
         fi
     done < <(tmux list-sessions 2>/dev/null)
 fi
 
 # fzfで選択
-choice=$(printf "%s\n" "${options[@]}" | fzf --prompt="Select tmux action/session: " --height=40% --reverse --border)
+choice=$(printf "%s\n" "${menu_options[@]}" | fzf --prompt="Select tmux action/session: " --height=40% --reverse --border)
 
 # 選択に応じた処理
 if [[ -z "$choice" ]]; then
