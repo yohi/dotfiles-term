@@ -68,9 +68,9 @@ cpu_icon=$(printf "\uF4BC")
 mem_icon=$(printf "\uF035B")
 
 # 文字化けや環境による化けを防ぐため、Unicodeのコードポイントから直接アイコンを生成
-# CPU (U+F4BC: nf-oct-cpu), RAM (U+F538: nf-mdi-memory - 古いNerd Fonts v2.x互換)
+# CPU (U+F4BC: nf-oct-cpu), RAM (U+EFC5: ユーザー環境のRAMモジュールアイコン)
 cpu_icon=$(printf "\uF4BC")
-mem_icon=$(printf "\uF538")
+mem_icon=$(printf "\uEFC5")
 
 # 各セグメントの末尾で #[default] を指定して色をリセットする (左側にNerd Fontsのアイコンを追加)
 echo "${cpu_color}${cpu_icon} CPU: $(printf "%3d" "$cpu_val")% $cpu_bar#[default] | ${mem_color}${mem_icon} Mem: $(printf "%3d" "$mem_val")% $mem_bar#[default]"
