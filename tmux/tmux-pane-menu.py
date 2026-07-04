@@ -11,9 +11,6 @@ if os.path.exists(linuxbrew_path):
 def main(stdscr):
     # マウストラッキングを有効にする
     curses.mousemask(curses.ALL_MOUSE_EVENTS | curses.REPORT_MOUSE_POSITION)
-    # マウス移動イベント(MouseMove)をターミナルから送信させるためのANSIエスケープシーケンス
-    sys.stdout.write('\033[?1003h')
-    sys.stdout.flush()
 
     target_pane = sys.argv[1] if len(sys.argv) > 1 else ""
     current_path = sys.argv[2] if len(sys.argv) > 2 else ""
@@ -66,10 +63,6 @@ def main(stdscr):
             current_row = 4 # Cancel
             break
 
-    # マウストラッキングを無効化する
-    sys.stdout.write('\033[?1003l')
-    sys.stdout.flush()
-
     # アクションの実行
     if current_row == 0:
         os.system(f"tmux kill-pane -t {target_pane}")
@@ -91,8 +84,5 @@ if __name__ == "__main__":
     try:
         curses.wrapper(run_curses)
     except Exception as e:
-        # 万が一のエラー時にマウストラッキングを確実にオフにしてターミナルが壊れるのを防ぐ
-        sys.stdout.write('\033[?1003l')
-        sys.stdout.flush()
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
