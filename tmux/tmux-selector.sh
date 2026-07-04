@@ -87,8 +87,8 @@ elif [[ "$choice" == "[Default Layout]" ]]; then
     tmux new-session -d -s "$session_name" -c "$selected_dir"
     # 左右に2:1 (右ペインを33%) の比率で分割（新しくできた右ペインにフォーカス移動）
     tmux split-window -h -p 33 -t "$session_name" -c "$selected_dir"
-    # 右ペインを上下に分割（フォーカスは右下ペインに移動）
-    tmux split-window -v -t "$session_name" -c "$selected_dir"
+    # 右ペインを上下に2:1 (下ペインを33%) の比率で分割（フォーカスは右下ペインに移動）
+    tmux split-window -v -p 33 -t "$session_name" -c "$selected_dir"
     # フォーカスを左のメインペインに戻す
     tmux select-pane -L -t "$session_name"
     # アタッチ
