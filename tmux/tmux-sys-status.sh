@@ -39,7 +39,7 @@ make_bar() {
         bar="${bar}■"
     done
     for ((i=0; i<empty; i++)); do
-        bar="${bar}░"
+        bar="${bar}□"
     done
     echo "[$bar]"
 }
