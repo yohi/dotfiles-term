@@ -36,7 +36,7 @@ if [[ -z "$choice" ]]; then
     exec zsh
 elif [[ "$choice" == "[New Session]" ]]; then
     echo -n "Enter new session name (or press Enter for default): "
-    read name
+    read -r name
     if [[ -z "$name" ]]; then
         exec tmux new-session
     else

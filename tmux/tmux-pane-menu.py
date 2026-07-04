@@ -76,15 +76,16 @@ def main(stdscr):
     except Exception:
         pass
 
+    import shlex
     # アクションの実行
     if current_row == 0:
-        os.system(f"tmux kill-pane -t {target_pane}")
+        os.system(f"tmux kill-pane -t {shlex.quote(target_pane)}")
     elif current_row == 1:
-        os.system(f"tmux split-window -h -t {target_pane} -c {current_path}")
+        os.system(f"tmux split-window -h -t {shlex.quote(target_pane)} -c {shlex.quote(current_path)}")
     elif current_row == 2:
-        os.system(f"tmux split-window -v -t {target_pane} -c {current_path}")
+        os.system(f"tmux split-window -v -t {shlex.quote(target_pane)} -c {shlex.quote(current_path)}")
     elif current_row == 3:
-        os.system(f"tmux resize-pane -t {target_pane} -Z")
+        os.system(f"tmux resize-pane -t {shlex.quote(target_pane)} -Z")
 
 def run_curses(stdscr):
     try:
