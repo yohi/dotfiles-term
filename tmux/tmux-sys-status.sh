@@ -26,26 +26,24 @@ else
     mem_val=0
 fi
 
-# 10段階のバーを生成する関数
-make_bar() {
-    local percent=$1
-    local filled=$(( (percent + 5) / 10 )) # 四捨五入
-    if [ $filled -gt 10 ]; then filled=10; fi
-    if [ $filled -lt 0 ]; then filled=0; fi
-    local empty=$(( 10 - filled ))
+# 20段階のバーを構築 (1段階 = 5%)
+get_bar() {
+    local val=$1
+    local num_bars=$(( val / 5 ))
+    local num_spaces=$(( 20 - num_bars ))
     
     local bar=""
-    for ((i=0; i<filled; i++)); do
+    for ((i=0; i<num_bars; i++)); do
         bar="${bar}|"
     done
-    for ((i=0; i<empty; i++)); do
+    for ((i=0; i<num_spaces; i++)); do
         bar="${bar} "
     done
     echo "[$bar]"
 }
 
-cpu_bar=$(make_bar "$cpu_val")
-mem_bar=$(make_bar "$mem_val")
+cpu_bar=$(get_bar "$cpu_val")
+mem_bar=$(get_bar "$mem_val")
 
 # 使用率に応じて色コード（黄色・赤）を決定する関数
 get_color_tag() {
@@ -61,11 +59,6 @@ get_color_tag() {
 
 cpu_color=$(get_color_tag "$cpu_val")
 mem_color=$(get_color_tag "$mem_val")
-
-# 文字化けや環境による化けを防ぐため、Unicodeのコードポイントから直接アイコンを生成
-# CPU (U+F4BC: nf-oct-cpu), RAM (U+F035B: nf-md-memory)
-cpu_icon=$(printf "\uF4BC")
-mem_icon=$(printf "\uF035B")
 
 # 文字化けや環境による化けを防ぐため、Unicodeのコードポイントから直接アイコンを生成
 # CPU (U+F4BC: nf-oct-cpu), RAM (U+EFC5: ユーザー環境のRAMモジュールアイコン)
