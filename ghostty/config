@@ -387,7 +387,7 @@ clipboard-paste-protection = true
 copy-on-select = clipboard
 
 # 右クリック時のアクションを指定します。
-# right-click-action = 
+right-click-action = ignore
 
 # クリックをリピートと見なす間隔（ミリ秒）を指定します。
 # click-repeat-interval = 
