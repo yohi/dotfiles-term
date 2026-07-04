@@ -47,5 +47,20 @@ make_bar() {
 cpu_bar=$(make_bar "$cpu_val")
 mem_bar=$(make_bar "$mem_val")
 
-# 整えて出力
-echo "CPU: $(printf "%3d" "$cpu_val")% $cpu_bar | Mem: $(printf "%3d" "$mem_val")% $mem_bar"
+# 使用率に応じて色コード（黄色・赤）を決定する関数
+get_color_tag() {
+    local percent=$1
+    if [ $percent -ge 90 ]; then
+        echo "#[fg=red,bold]"
+    elif [ $percent -ge 80 ]; then
+        echo "#[fg=yellow,bold]"
+    else
+        echo "" # 80%未満はデフォルト色
+    fi
+}
+
+cpu_color=$(get_color_tag "$cpu_val")
+mem_color=$(get_color_tag "$mem_val")
+
+# 各セグメントの末尾で #[default] を指定して色をリセットする
+echo "${cpu_color}CPU: $(printf "%3d" "$cpu_val")% $cpu_bar#[default] | ${mem_color}Mem: $(printf "%3d" "$mem_val")% $mem_bar#[default]"
