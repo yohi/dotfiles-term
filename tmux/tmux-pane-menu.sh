@@ -1,7 +1,10 @@
-#!/usr/bin/env zsh
+#!/bin/bash
 
-# 起動元のペインIDが取れない場合は終了
-if [[ -z "$TMUX_PANE" ]]; then
+# 引数からターゲットペインIDとカレントパスを取得
+TARGET_PANE="$1"
+CURRENT_PATH="$2"
+
+if [[ -z "$TARGET_PANE" ]]; then
     exit 0
 fi
 
@@ -20,23 +23,20 @@ choices=(
 )
 
 # fzfで選択
-choice=$(printf "%s\n" "${choices[@]}" | fzf --prompt="Select action: " --height=100% --reverse --border=none)
+choice=$(printf "%s\n" "${choices[@]}" | fzf --prompt="Select action: " --height=100% --reverse --border=none 2>/home/y_ohi/fzf-error.log)
 
 case "$choice" in
     "1. Kill Pane (Close)")
-        tmux kill-pane -t "$TMUX_PANE"
+        tmux kill-pane -t "$TARGET_PANE"
         ;;
     "2. Horizontal Split (Left/Right)")
-        # 元のペインのパスを取得して、同じディレクトリで分割する
-        current_path=$(tmux display-message -t "$TMUX_PANE" -p "#{pane_current_path}")
-        tmux split-window -h -t "$TMUX_PANE" -c "$current_path"
+        tmux split-window -h -t "$TARGET_PANE" -c "$CURRENT_PATH"
         ;;
     "3. Vertical Split (Top/Bottom)")
-        current_path=$(tmux display-message -t "$TMUX_PANE" -p "#{pane_current_path}")
-        tmux split-window -v -t "$TMUX_PANE" -c "$current_path"
+        tmux split-window -v -t "$TARGET_PANE" -c "$CURRENT_PATH"
         ;;
     "4. Zoom / Unzoom (Maximize)")
-        tmux resize-pane -t "$TMUX_PANE" -Z
+        tmux resize-pane -t "$TARGET_PANE" -Z
         ;;
     *)
         exit 0
