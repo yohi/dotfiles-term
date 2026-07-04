@@ -27,14 +27,14 @@ def main(stdscr):
     while True:
         stdscr.clear()
         
-        # メニュー描画 (左右上下のマージンを詰めて配置)
+        # メニュー描画 (高さ制限を考慮し、0行目から隙間なく配置)
         for idx, item in enumerate(menu_items):
             if idx == current_row:
                 stdscr.attron(curses.A_REVERSE)
-                stdscr.addstr(idx + 1, 2, item)
+                stdscr.addstr(idx, 2, item)
                 stdscr.attroff(curses.A_REVERSE)
             else:
-                stdscr.addstr(idx + 1, 2, item)
+                stdscr.addstr(idx, 2, item)
 
         stdscr.refresh()
 
@@ -43,8 +43,8 @@ def main(stdscr):
         if key == curses.KEY_MOUSE:
             try:
                 _, mx, my, _, bstate = curses.getmouse()
-                # メニューのY座標範囲内（行1から5）か判定
-                menu_y = my - 1
+                # メニューのY座標範囲内（行0から4）か判定
+                menu_y = my
                 if 0 <= menu_y < len(menu_items):
                     current_row = menu_y
                 
