@@ -36,10 +36,10 @@ make_bar() {
     
     local bar=""
     for ((i=0; i<filled; i++)); do
-        bar="${bar}■"
+        bar="${bar}|"
     done
     for ((i=0; i<empty; i++)); do
-        bar="${bar}□"
+        bar="${bar} "
     done
     echo "[$bar]"
 }
