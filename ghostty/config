@@ -187,7 +187,7 @@ mouse-scroll-multiplier = 2
 background-opacity = 0.9
 
 # 明示的に背景色が設定されたセルにも背景不透明度を適用します。
-# background-opacity-cells = 
+background-opacity-cells = true
 
 # 背景不透明度が1未満の場合に背景をぼかすかどうか（またはぼかし強度）を指定します。
 background-blur = true
