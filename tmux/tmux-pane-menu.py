@@ -11,6 +11,12 @@ if os.path.exists(linuxbrew_path):
 def main(stdscr):
     # マウストラッキングを有効にする
     curses.mousemask(curses.ALL_MOUSE_EVENTS | curses.REPORT_MOUSE_POSITION)
+    # マウス移動イベント(MouseMove)をターミナルから送信させるためのANSIエスケープシーケンス
+    try:
+        sys.stdout.write('\033[?1003h')
+        sys.stdout.flush()
+    except Exception:
+        pass
 
     target_pane = sys.argv[1] if len(sys.argv) > 1 else ""
     current_path = sys.argv[2] if len(sys.argv) > 2 else ""
@@ -63,6 +69,13 @@ def main(stdscr):
             current_row = 4 # Cancel
             break
 
+    # マウストラッキングを無効化する
+    try:
+        sys.stdout.write('\033[?1003l')
+        sys.stdout.flush()
+    except Exception:
+        pass
+
     # アクションの実行
     if current_row == 0:
         os.system(f"tmux kill-pane -t {target_pane}")
@@ -84,5 +97,10 @@ if __name__ == "__main__":
     try:
         curses.wrapper(run_curses)
     except Exception as e:
+        try:
+            sys.stdout.write('\033[?1003l')
+            sys.stdout.flush()
+        except Exception:
+            pass
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
