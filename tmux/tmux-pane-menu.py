@@ -33,9 +33,9 @@ def main(stdscr):
         # メニュー描画 (左右上下のマージンを詰めて配置)
         for idx, item in enumerate(menu_items):
             if idx == current_row:
-                stdscr.attron(curses.color_pair(1))
+                stdscr.attron(curses.A_REVERSE)
                 stdscr.addstr(idx + 1, 2, item)
-                stdscr.attroff(curses.color_pair(1))
+                stdscr.attroff(curses.A_REVERSE)
             else:
                 stdscr.addstr(idx + 1, 2, item)
 
@@ -80,13 +80,16 @@ def main(stdscr):
     elif current_row == 3:
         os.system(f"tmux resize-pane -t {target_pane} -Z")
 
+def run_curses(stdscr):
+    try:
+        curses.curs_set(0)
+    except Exception:
+        pass
+    main(stdscr)
+
 if __name__ == "__main__":
     try:
-        curses.wrapper(lambda stdscr: (
-            curses.curs_set(0),
-            curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE),
-            main(stdscr)
-        ))
+        curses.wrapper(run_curses)
     except Exception as e:
         # 万が一のエラー時にマウストラッキングを確実にオフにしてターミナルが壊れるのを防ぐ
         sys.stdout.write('\033[?1003l')
