@@ -5,6 +5,11 @@ if [[ -z "$TMUX_PANE" ]]; then
     exit 0
 fi
 
+# PATHにLinuxbrewを追加してコマンド（fzf, tmux）を使えるようにする
+if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
 # 選択肢
 choices=(
     "1. Kill Pane (Close)"
