@@ -22,9 +22,9 @@ choices=(
     "5. Cancel"
 )
 
-# fzfで選択 (対象のディレクトリをプロンプトに表示して分かりやすくする。固定メニューなので --no-input で文字入力欄を非表示にする)
+# fzfで選択 (対象のディレクトリをプロンプトに表示して分かりやすくする。固定メニューなので --no-input で文字入力欄を非表示にする。hover:focus でマウスホバーでの選択移動を有効化)
 display_path="${CURRENT_PATH/#$HOME/\~}"
-choice=$(printf "%s\n" "${choices[@]}" | fzf --prompt="Action for $display_path: " --height=100% --reverse --border=none --no-input 2>/home/y_ohi/fzf-error.log)
+choice=$(printf "%s\n" "${choices[@]}" | fzf --prompt="Action for $display_path: " --height=100% --reverse --border=none --no-input --bind="hover:focus" 2>/home/y_ohi/fzf-error.log)
 
 case "$choice" in
     "1. Kill Pane (Close)")
