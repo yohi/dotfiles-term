@@ -219,7 +219,7 @@ background-blur = true
 # tmux サーバは共有され、各サーフェスは個別セッションになる。
 # サーバ初回起動時に tmux-continuum が前回セッションを自動復元する。
 # PATH に tmux が直接見えない場合にも対応するため、ログインシェル経由で PATH を確立して tmux を起動する。
-command = zsh --login -c tmux
+command = zsh -i -c "${HOME}/dotfiles/components/dotfiles-term/tmux/tmux-selector.sh"
 
 # Ghostty起動時の最初のターミナルサーフェスでのみ実行するコマンドを指定します。
 # initial-command = 
@@ -296,11 +296,14 @@ keybind = global:alt+space=toggle_quick_terminal
 
 # --- ウィンドウ表示とUI ---
 # ウィンドウの左右および上下のパディングを指定します。
-window-padding-x = 5
-window-padding-y = 5
+window-padding-x = 0
+window-padding-y = 0
+
+# ウィンドウを最大化した状態で起動します。
+maximize = true
 
 # セルサイズで割り切れない余分なパディングを四辺でバランスよく配置します。
-# window-padding-balance = 
+window-padding-balance = true
 
 # ウィンドウのパディング領域の色を指定します。
 # window-padding-color = 
@@ -387,7 +390,7 @@ clipboard-paste-protection = true
 copy-on-select = clipboard
 
 # 右クリック時のアクションを指定します。
-# right-click-action = 
+right-click-action = ignore
 
 # クリックをリピートと見なす間隔（ミリ秒）を指定します。
 # click-repeat-interval = 
