@@ -72,5 +72,5 @@ mem_icon=$(printf "\uF035B")
 cpu_icon=$(printf "\uF4BC")
 mem_icon=$(printf "\uEFC5")
 
-# 各セグメントの末尾で #[default] を指定して色をリセットする (左側にNerd Fontsのアイコンを追加)
-echo "${cpu_color}${cpu_icon} CPU: $(printf "%3d" "$cpu_val")% $cpu_bar#[default] | ${mem_color}${mem_icon} Mem: $(printf "%3d" "$mem_val")% $mem_bar#[default]"
+# 各セグメントの末尾で #[default] を指定して色をリセットする (左側にNerd Fontsのアイコンを追加、文字との間に余白を確保するためスペースを2つにする)
+echo "${cpu_color}${cpu_icon}  CPU: $(printf "%3d" "$cpu_val")% $cpu_bar#[default] | ${mem_color}${mem_icon}  Mem: $(printf "%3d" "$mem_val")% $mem_bar#[default]"
