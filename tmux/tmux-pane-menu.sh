@@ -22,8 +22,9 @@ choices=(
     "5. Cancel"
 )
 
-# fzfで選択
-choice=$(printf "%s\n" "${choices[@]}" | fzf --prompt="Select action: " --height=100% --reverse --border=none 2>/home/y_ohi/fzf-error.log)
+# fzfで選択 (対象のディレクトリをプロンプトに表示して分かりやすくする)
+display_path="${CURRENT_PATH/#$HOME/\~}"
+choice=$(printf "%s\n" "${choices[@]}" | fzf --prompt="Action for $display_path: " --height=100% --reverse --border=none 2>/home/y_ohi/fzf-error.log)
 
 case "$choice" in
     "1. Kill Pane (Close)")
