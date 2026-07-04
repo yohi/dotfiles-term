@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # 1. CPU使用率の計算 (キャッシュ方式で超軽量・スリープなし)
-CACHE_FILE="/tmp/tmux-cpu-stat-cache"
+CACHE_FILE="${XDG_RUNTIME_DIR:-/tmp}/tmux-cpu-stat-cache-${USER:-shared}"
 read -r _ user nice system idle iowait irq softirq steal guest guest_nice < /proc/stat
 
 total_current=$((user + nice + system + idle + iowait + irq + softirq + steal))
