@@ -19,28 +19,25 @@ def main(stdscr):
     current_path = sys.argv[2] if len(sys.argv) > 2 else ""
 
     menu_items = [
-        " 1. Kill Pane (Close)        ",
-        " 2. Horizontal Split (Left/R)",
-        " 3. Vertical Split (Top/Bott)",
-        " 4. Zoom / Unzoom (Maximize) ",
-        " 5. Cancel                   "
+        " 1. Kill Pane (Close) ",
+        " 2. Horizontal Split  ",
+        " 3. Vertical Split    ",
+        " 4. Zoom / Unzoom     ",
+        " 5. Cancel            "
     ]
     current_row = 0
 
     while True:
         stdscr.clear()
         
-        # タイトル描画
-        stdscr.addstr(1, 2, f"Target: {target_pane}", curses.A_BOLD)
-        
-        # メニュー描画
+        # メニュー描画 (縦横中央にバランスよく配置)
         for idx, item in enumerate(menu_items):
             if idx == current_row:
                 stdscr.attron(curses.color_pair(1))
-                stdscr.addstr(idx + 3, 2, item)
+                stdscr.addstr(idx + 2, 5, item)
                 stdscr.attroff(curses.color_pair(1))
             else:
-                stdscr.addstr(idx + 3, 2, item)
+                stdscr.addstr(idx + 2, 5, item)
 
         stdscr.refresh()
 
@@ -49,8 +46,8 @@ def main(stdscr):
         if key == curses.KEY_MOUSE:
             try:
                 _, mx, my, _, bstate = curses.getmouse()
-                # メニューのY座標範囲内（行3から7）か判定
-                menu_y = my - 3
+                # メニューのY座標範囲内（行2から6）か判定
+                menu_y = my - 2
                 if 0 <= menu_y < len(menu_items):
                     current_row = menu_y
                 
