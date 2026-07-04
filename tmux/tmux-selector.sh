@@ -54,12 +54,12 @@ elif [[ "$choice" == "[Default Layout]" ]]; then
 
     # セッションをバックグラウンドで作成
     tmux new-session -d -s "$session_name"
-    # 左右に50%ずつ分割 (左:ペイン0, 右:ペイン1)
+    # 左右に50%ずつ分割（デフォルトでフォーカスは新しくできた右ペインに移動します）
     tmux split-window -h -t "$session_name"
-    # 右側のペイン(ペイン1)を上下に分割
-    tmux split-window -v -t "$session_name":.1
-    # 左側のペイン(ペイン0)にフォーカスを戻す
-    tmux select-pane -t "$session_name":.0
+    # 右ペインを上下に分割（フォーカスは新しくできた右下ペインに移動します）
+    tmux split-window -v -t "$session_name"
+    # フォーカスを左のメインペインに戻す
+    tmux select-pane -L -t "$session_name"
     # アタッチ
     exec tmux attach-session -t "$session_name"
 elif [[ "$choice" == "[Normal Shell]" ]]; then
