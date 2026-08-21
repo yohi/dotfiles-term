@@ -31,7 +31,6 @@ dotfiles-term/
 │   ├── config                  # [Link Target] Ghostty configuration → ~/.config/ghostty/config
 │   ├── xterm-ghostty.terminfo  # terminfo entry compiled to ~/.terminfo/ via make setup
 │   └── ghostty-ssh-wrapper.sh  # [Link Target] SSH wrapper script → ~/.local/bin/ghostty-ssh-wrapper.sh
-├── ghostty-src/                # Ghostty source code (for reference)
 ├── zsh-functions/              # Shell function scripts
 │   └── ghostty-ssh.zsh         # zsh SSH wrapper function to auto-detect xterm-ghostty remote support
 ├── tmux/                       # tmux multiplexer config

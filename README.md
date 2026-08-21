@@ -34,8 +34,7 @@
 ├── AGENTS.md
 ├── _mk/                    # Makefile sub-targets
 ├── tilix/                  # Tilix 設定 (dconf)
-├── ghostty/                # Ghostty 設定 (config, xterm-ghostty.terminfo, ssh-wrapper.sh)
-├── ghostty-src/            # Ghostty ソース（参照）
+├── ghostty/                # Ghostty 設定 (config, xterm-ghostty.terminfo, ghostty-ssh-wrapper.sh)
 ├── tmux/                   # tmux 設定 (tmux.conf、セッション復元)
 ├── wezterm.lua             # WezTerm 設定 (Lua)
 └── zsh-functions/          # zsh 用関数スクリプト (ghostty-ssh.zsh)
