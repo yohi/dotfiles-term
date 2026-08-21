@@ -28,8 +28,12 @@ dotfiles-term/
 ├── tilix/                      # Tilix terminal config
 │   └── tilix.dconf             # dconf export for Tilix (applied via dconf load)
 ├── ghostty/                    # Ghostty terminal config
-│   └── config                  # [Link Target] Ghostty configuration → ~/.config/ghostty/config
+│   ├── config                  # [Link Target] Ghostty configuration → ~/.config/ghostty/config
+│   ├── xterm-ghostty.terminfo  # terminfo entry compiled to ~/.terminfo/ via make setup
+│   └── ghostty-ssh-wrapper.sh  # [Link Target] SSH wrapper script → ~/.local/bin/ghostty-ssh-wrapper.sh
 ├── ghostty-src/                # Ghostty source code (for reference)
+├── zsh-functions/              # Shell function scripts
+│   └── ghostty-ssh.zsh         # zsh SSH wrapper function to auto-detect xterm-ghostty remote support
 ├── tmux/                       # tmux multiplexer config
 │   └── tmux.conf               # [Link Target] tmux config → ~/.tmux.conf (session restore: resurrect+continuum)
 ├── _mk/                        # Makefile sub-targets
@@ -43,6 +47,9 @@ dotfiles-term/
 - `tilix/tilix.dconf` is a dconf export — applied via `dconf load`, NOT linked.
 - `wezterm.lua` is linked to `~/.wezterm.lua` via `ln -sfn` in the Makefile (`make setup`).
 - `ghostty/config` is linked to `~/.config/ghostty/config` via `ln -sfn` in the Makefile (`make setup`).
+- `ghostty/xterm-ghostty.terminfo` is compiled and installed to `~/.terminfo/` via `tic` during `make setup`.
+- `ghostty/ghostty-ssh-wrapper.sh` is linked to `~/.local/bin/ghostty-ssh-wrapper.sh` via `make setup`.
+- `zsh-functions/ghostty-ssh.zsh` provides an SSH wrapper function for zsh to auto-detect remote `xterm-ghostty` support and fall back to `TERM=xterm-256color` when unsupported.
 - `tmux/tmux.conf` is linked to `~/.tmux.conf` via `ln -sfn` in the Makefile (`make setup`); TPM is auto-cloned and its plugins auto-installed by the Makefile.
 - **tmux session restore:** `tmux-resurrect` + `tmux-continuum` (`@continuum-restore 'on'`) restore the previous session on tmux server start. `tmux-continuum` MUST remain the LAST `@plugin` — it appends an auto-save hook to `status-right`, and theme/status plugins (`catppuccin`, `tmux-colortag`, `tmux-cpu`) loaded after it would overwrite the hook and silently break auto-save.
 - **tmux status bar:** `set-environment -g TMUX_COLORTAG_TAG_ONLY yes` prevents `tmux-colortag` from overwriting the custom `status-left`/`status-right` (window-tab coloring is preserved).

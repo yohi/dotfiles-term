@@ -10,6 +10,16 @@ setup-term: ## ターミナルの設定をシステムに適用します
 		echo "Backed up existing Ghostty config to config.bak.$$TIMESTAMP"; \
 	fi
 	ln -sfn "$(CURDIR)/ghostty/config" "$(HOME)/.config/ghostty/config"
+	@if command -v tic >/dev/null 2>&1; then \
+		echo "Installing xterm-ghostty terminfo..."; \
+		mkdir -p "$(HOME)/.terminfo"; \
+		tic -o "$(HOME)/.terminfo" -x "$(CURDIR)/ghostty/xterm-ghostty.terminfo" || echo "Warning: Failed to install xterm-ghostty terminfo"; \
+	else \
+		echo "Warning: tic command not found, skipping terminfo setup"; \
+	fi
+	chmod +x "$(CURDIR)/ghostty/ghostty-ssh-wrapper.sh"
+	mkdir -p "$(HOME)/.local/bin"
+	ln -sfn "$(CURDIR)/ghostty/ghostty-ssh-wrapper.sh" "$(HOME)/.local/bin/ghostty-ssh-wrapper.sh"
 	@# Tilix
 	@if command -v dconf >/dev/null 2>&1; then \
 		echo "Loading Tilix settings via dconf..."; \
